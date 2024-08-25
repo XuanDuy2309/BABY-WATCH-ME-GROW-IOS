@@ -44,17 +44,17 @@ const GlobalProvider = ({ children }: { children: any }) => {
 
         await signin(formData)
           .then((res) => {
-            console.log(res.data);
+
             setUser(res.data);
             AsyncStorage.setItem("user", JSON.stringify(res.data));
             setIsLoading(false);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             setIsLoading(false);
           });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
         setIsLoading(false);
       }
     } else {
@@ -88,13 +88,13 @@ const GlobalProvider = ({ children }: { children: any }) => {
       );
       await signup(formData)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setUser(res.data);
           AsyncStorage.setItem("user", JSON.stringify(res.data));
           setIsLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setIsLoading(false);
         });
     }

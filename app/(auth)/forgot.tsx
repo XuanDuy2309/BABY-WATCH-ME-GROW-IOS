@@ -31,12 +31,12 @@ const signIn = () => {
       );
       await resetPassword(formData)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           alert(res.data.message);
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           alert(err);
           setLoading(false);
         });

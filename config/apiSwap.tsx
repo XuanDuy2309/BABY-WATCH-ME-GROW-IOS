@@ -2,7 +2,7 @@ import { IUser } from '@/interface/IUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
 const api = axios.create({
-    baseURL: 'https://api.funface.online',
+    baseURL: 'https://video.funface.online',
     headers: {
         'Access-Control-Allow-Origin': ['*','$http_origin'],
         'Access-Control-Allow-Headers': ['*','DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range'],

@@ -10,6 +10,8 @@ const images = {
     cardItem4: require('./cardItem4.png'),
     cardItem5: require('./cardItem5.png'),
     cardItem6: require('./cardItem6.png'),
+    father: require('./father.png'),
+    mother: require('./mother.png'),
     search: require('./search.png'),
 }
 export default images;

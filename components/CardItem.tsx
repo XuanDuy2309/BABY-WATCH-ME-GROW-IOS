@@ -9,13 +9,15 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        // if(!user){
-        //   Alert.alert("Opp...!","Log in or register to explore unique features.");
-        //   return;
-        // }
-        if (title != "Generator" && title != "Profile") {
-          router.push("/(home)/template/[template]");
+        if(!user){
+          Alert.alert("Opp...!","Log in or register to explore unique features.");
           return;
+        }
+        if (title != "Generator" && title != "Profile") {
+          router.push(`/template/${title}`);
+          return;
+        } else {
+          router.push(`/swap/${title}`);
         }
 
       }}
