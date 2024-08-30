@@ -1,13 +1,14 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Alert } from "react-native";
 import React, { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CardItem from "@/components/CardItem";
 import images from "@/assets/images";
 import { router } from "expo-router";
 import { GlobalContext } from "@/context/GlobalProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const index = () => {
-  const { user } = useContext(GlobalContext);
+  const { user, handleSignOut } = useContext(GlobalContext);
   const data = [
     { id: "0", img: images.cardItem1, title: "Generator" },
     { id: "1", img: images.cardItem2, title: "New Born" },
@@ -43,7 +44,7 @@ const index = () => {
               return (
                 <View className="py-6 flex-row justify-center gap-2">
                   <TouchableOpacity
-                    className="flex-1 bg-black py-2 rounded-tl-lg rounded-tr-lg"
+                    className="flex-1 bg-black py-2 rounded-lg"
                     onPress={() => {
                       router.push("/sign-in");
                     }}
@@ -53,7 +54,7 @@ const index = () => {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    className="flex-1 bg-black py-2 rounded-tl-lg rounded-tr-lg"
+                    className="flex-1 bg-black py-2 rounded-lg"
                     onPress={() => {
                       router.push("/sign-up");
                     }}
@@ -65,7 +66,28 @@ const index = () => {
                 </View>
               );
             }
-          }}
+
+            return (
+              <>
+                <TouchableOpacity
+                  className="flex-1 bg-black py-2 rounded-lg mt-6"
+                  onPress={()=>{
+                    Alert.alert('Sign Out', 'Are you sure?', [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {text: 'OK', onPress: handleSignOut},
+                    ]);
+                  }}
+                >
+                  <Text className="text-white text-center font-normal text-lg">Sign Out</Text>
+                </TouchableOpacity>
+              </>
+            )
+
+          }
+          }
         />
       </View>
     </SafeAreaView>

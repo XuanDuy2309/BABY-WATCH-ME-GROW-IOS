@@ -3,17 +3,21 @@ import { IUser } from "@/interface/IUser";
 import { getUser, signin, signup } from "@/service/auth";
 import signIn from "@/app/(auth)/sign-in";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Redirect, router } from "expo-router";
+import { Alert } from "react-native";
 
 interface GlobalContextType {
   handleSignIn: (formData: any) => void;
-  handleSignUp: (formData: any) => void;
+  handleSignUp: (formData: any,checkTerms: boolean) => void;
+  handleSignOut: (formData: any) => void;
   user: IUser;
   isLoading: boolean;
 }
 
 export const GlobalContext = createContext<GlobalContextType>({
-  handleSignIn: () => {},
-  handleSignUp: () => {},
+  handleSignIn: () => { },
+  handleSignUp: () => { },
+  handleSignOut: () => { },
   user: {
     device_register: "",
     email: "",
@@ -42,17 +46,16 @@ const GlobalProvider = ({ children }: { children: any }) => {
         formData.append("password", data.password);
         // console.log(formData);
 
-        await signin(formData)
-          .then((res) => {
-
-            setUser(res.data);
-            AsyncStorage.setItem("user", JSON.stringify(res.data));
-            setIsLoading(false);
-          })
-          .catch((err) => {
-            // console.log(err);
-            setIsLoading(false);
-          });
+        const result = await signin(formData)
+        if (result.data.messages) {
+          console.log(result.data.message);
+          Alert.alert("Error", "verify password error wrong password");
+          setIsLoading(false);
+          return;
+        }
+        setUser(result.data);
+        setIsLoading(false);
+        await AsyncStorage.setItem("user", JSON.stringify(result.data));
       } catch (err) {
         // console.log(err);
         setIsLoading(false);
@@ -67,12 +70,17 @@ const GlobalProvider = ({ children }: { children: any }) => {
     user_name: "";
     email: "";
     password: "";
-    confirm_password:"",
+    confirm_password: "",
     ip_register: "";
     device_register: "";
     link_avatar: "";
-  }) => {
-    if (data.email === "" || data.password === "" || data.user_name === ""|| data.confirm_password !== data.password) {
+  },checkTerms: boolean) => {
+    if (checkTerms===false) {
+      alert("Please agree with terms and conditions!");
+      setIsLoading(false);
+      return;
+    }
+    if (data.email === "" || data.password === "" || data.user_name === "" || data.confirm_password !== data.password){
       alert("Please confirm all field or confirm password is incorrect!");
     } else {
       setIsLoading(true);
@@ -86,27 +94,32 @@ const GlobalProvider = ({ children }: { children: any }) => {
         "link_avatar",
         `https://a0.anyrgb.com/pngimg/1236/14/no-facial-features-no-avatar-no-eyes-expressionless-avatar-icon-delayering-avatar-user-avatar-men-head-portrait-thumbnail.png?fbclid=IwAR3IUCAOlBSThvKijmWXmNuZk-6oEe1q6k-oGQXGr_zd1zWixMIUfAaAyfw`
       );
-      await signup(formData)
-        .then((res) => {
-          // console.log(res.data);
-          setUser(res.data);
-          AsyncStorage.setItem("user", JSON.stringify(res.data));
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          // console.log(err);
-          setIsLoading(false);
-        });
+      const result = await signup(formData);
+      if(result.data.message) {
+        alert(result.data.message);
+        setIsLoading(false);
+        return;
+      }
+      setUser(result.data);
+      setIsLoading(false);
+      await AsyncStorage.setItem("user", JSON.stringify(result.data));
     }
   };
+
+  const handleSignOut = () => {
+    setUser(null);
+    AsyncStorage.removeItem("user");
+    router.navigate('/(home)');
+  }
 
   return (
     <GlobalContext.Provider
       value={{
         handleSignIn,
         handleSignUp,
-        user,
+        handleSignOut,
         isLoading,
+        user,
       }}
     >
       {children}

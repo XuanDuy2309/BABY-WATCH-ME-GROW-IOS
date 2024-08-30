@@ -6,13 +6,14 @@ import { StatusBar } from "expo-status-bar";
 import images from "@/assets/images";
 import Item from "./item";
 
+
 const index = () => {
   const width = Dimensions.get("window").width;
   const heigth = Dimensions.get("window").height;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const data = ["item1","item2","item3","item4","item5"]
-  
+  const data = ["item1", "item2", "item3", "item4", "item5"]
+
 
   return (
     <SafeAreaView>
@@ -27,23 +28,24 @@ const index = () => {
           onSnapToItem={(index) => {
             setCurrentIndex(index);
           }}
-          renderItem={({item}) => {return(<Item title={item} />)}}
+          renderItem={({ item }) => { return (<Item title={item} />) }}
         />
         <View
           className={`flex-row justify-center py-2 absolute bottom-0 w-full`}
         >
-          {data.map((item,index) => {
+          {data.map((item, index) => {
             return (
               <View
                 key={index}
-                className={`w-2.5 h-2.5 rounded-full  mx-2 ${
-                  index === currentIndex ? "bg-black" : "bg-[#D9D9D9] border"
-                }`}
+                className={`w-2.5 h-2.5 rounded-full  mx-2 ${index === currentIndex ? "bg-black" : "bg-[#D9D9D9] border"
+                  }`}
               />
             );
           })}
         </View>
       </View>
+
+
     </SafeAreaView>
   );
 };

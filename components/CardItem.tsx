@@ -13,19 +13,29 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
           Alert.alert("Opp...!","Log in or register to explore unique features.");
           return;
         }
-        if (title != "Generator" && title != "Profile") {
+        if (title != "Generator" && title != "Profile"&&title != "New Born") {
           router.push(`/template/${title}`);
           return;
-        } else {
-          router.push(`/swap/${title}`);
+        } 
+        if (title === "Generator"){
+          router.push('/generator');
+          return;
+        }
+        if (title === "New Born"){
+          router.push('/newborn');
+          return;
+        }
+        if (title === "Profile"){
+          router.push('/profile');
+          return;
         }
 
       }}
       className="w-[186px] h-[186px]"
     >
-      <View className="relative w-full h-full rounded-lg">
+      <View className="relative w-full h-full rounded-lg overflow-hidden">
         <Image source={img} className="w-full h-full object-cover" />
-        <View className="absolute bottom-0 w-full py-2 bg-[#FF7991] rounded-tl-lg rounded-tr-lg">
+        <View className="absolute bottom-0 w-full py-2 bg-[#FF7991] rounded-tl rounded-tr">
           <Text className="w-full text-center font-normal text-lg text-white">
             {title}
           </Text>

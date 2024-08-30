@@ -16,7 +16,7 @@ import { getTemplImg, getTemplVid } from "@/service/image";
 import Loader from "@/components/Loader";
 import { ResizeMode, Video } from "expo-av";
 import ReactPaginate from "react-paginate";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 const listTempl = [
     { id: "0", title: "Time Machine", url: "time_machine_temp" },
@@ -37,6 +37,18 @@ const Template = () => {
 
     const handleChangePage = (e: any) => {
         setCurrentPage(e);
+    }
+
+    const handleGoToSwap = (item:any)=>{
+        if (currentTempl.title === "Kid & Mom") {
+            router.push(`/kid&mom/${item.folder_name}`);
+            return;
+        }
+        if(currentTempl.title === "Dad & Mom"){
+            router.push(`/dad&mom/${item.id}`);
+            return;
+        }
+        router.push(`/timemachine/${item.id}`);
     }
 
     const fetchData = async () => {
@@ -73,7 +85,7 @@ const Template = () => {
 
     useEffect(() => {
         fetchData();
-        console.log(title);
+        // console.log(title);
         return () => { };
     }, [currentPage, currentTempl]);
 
@@ -89,7 +101,7 @@ const Template = () => {
                     justifyContent: "space-around",
                 }}
                 renderItem={({ item }) => {
-                    if (item.title === currentTempl.title) {
+                    if (currentTempl&&item.title === currentTempl.title) {
                         return (
                             <TouchableOpacity
                                 className="w-[134px] h-[36px] flex justify-center items-center bg-[#FF7991] rounded-3xl"
@@ -123,16 +135,17 @@ const Template = () => {
                 renderItem={({ item }) => {
                     if (currentTempl.title === "Kid & Mom") {
                         return (
-                            <View className="flex-1 h-[279px] rounded overflow-hidden mt-4">
+                            <TouchableOpacity className="flex-1 h-[279px] rounded overflow-hidden mt-4" onPress={()=>handleGoToSwap(item)}>
                                 <Image
                                     source={{ uri: item.image_sample }}
                                     className="w-full h-full object-cover"
                                 />
-                            </View>
+                            </TouchableOpacity>
                         );
                     }
+                    // console.log(item.linkgoc);
                     return (
-                        <View className="flex-1 h-[279px] rounded overflow-hidden mt-4 bg-black">
+                        <TouchableOpacity className="flex-1 h-[279px] rounded overflow-hidden mt-4 bg-black" onPress={() => handleGoToSwap(item)}>
                             <Video
                                 source={{ uri: item.linkgoc }}
                                 useNativeControls={true}
@@ -140,7 +153,7 @@ const Template = () => {
                                 isLooping
                                 className="w-full h-full object-cover"
                             />
-                        </View>
+                        </TouchableOpacity>
                     );
                 }}
             />

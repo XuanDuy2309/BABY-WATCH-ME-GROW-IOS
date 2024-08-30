@@ -7,7 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 const _layout = () => {
-  const {user, isLoading } = useContext(GlobalContext);
+  const { user, isLoading } = useContext(GlobalContext);
   if (!isLoading && user) return <Redirect href="/(home)" />;
   return (
     <>
@@ -17,7 +17,7 @@ const _layout = () => {
           options={{
             headerShown: true,
             headerTitle: "Sign In",
-            headerTitleStyle: {fontSize: 30, fontWeight: 600},
+            headerTitleStyle: { fontSize: 30, fontWeight: 600 },
             headerTitleAlign: "center",
             headerLeft: () => (
               <AntDesign
@@ -36,7 +36,7 @@ const _layout = () => {
           options={{
             headerShown: true,
             headerTitle: "Sign Up",
-            headerTitleStyle: {fontSize: 30, fontWeight: 600},
+            headerTitleStyle: { fontSize: 30, fontWeight: 600 },
             headerTitleAlign: "center",
             headerLeft: () => (
               <AntDesign
@@ -55,7 +55,7 @@ const _layout = () => {
           options={{
             headerShown: true,
             headerTitle: "Forgot password",
-            headerTitleStyle: {fontSize: 30, fontWeight: 600},
+            headerTitleStyle: { fontSize: 30, fontWeight: 600 },
             headerTitleAlign: "center",
             headerLeft: () => (
               <AntDesign
@@ -69,6 +69,7 @@ const _layout = () => {
 
           }}
         />
+        
       </Stack>
       <Loader isLoading={isLoading} />
       <StatusBar backgroundColor="#161622" style="dark" />

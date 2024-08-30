@@ -4,7 +4,7 @@ import { GlobalContext } from "@/context/GlobalProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loader from "@/components/Loader";
 import { router } from "expo-router";
-import Checkbox from "expo-checkbox";
+import CheckBox from "@/components/CheckBox";
 
 const signIn = () => {
   const { handleSignIn, user, isLoading } = useContext(GlobalContext);
@@ -25,23 +25,20 @@ const signIn = () => {
           onChangeText={(text) => handleInput("email_or_username", text)}
           placeholder="Email or Username"
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-4"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
         />
         <TextInput
           onChangeText={(text) => handleInput("password", text)}
           placeholder="Password"
           secureTextEntry={true}
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-2"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
         />
         <View className="mt-4 w-4/5 flex-row justify-between items-center">
-          <View className="flex-row gap-2 items-center h-6">
-            <Checkbox
-              value={isChecked}
-              onValueChange={setChecked}
-              color={isChecked ? "#4630EB" : undefined}
-            />
-            <Text>Remember to log in</Text>
+          <View className="flex-row items-center h-6">
+            <CheckBox onChange={()=>setChecked(!isChecked)} checked={isChecked}/>
+            <Text className="ml-2">Remember to log in</Text>
           </View>
           <TouchableOpacity
             className="h-full"

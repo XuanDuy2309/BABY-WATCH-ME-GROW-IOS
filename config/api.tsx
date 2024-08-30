@@ -1,6 +1,11 @@
 import { IUser } from '@/interface/IUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios'
+// import axiosLogger from 'axios-logger';
+
+// axios.interceptors.request.use(axiosLogger.requestLogger);
+// axios.interceptors.response.use(axiosLogger.responseLogger);
+
 const api = axios.create({
     baseURL: 'https://api.funface.online',
     headers: {
@@ -11,7 +16,14 @@ const api = axios.create({
         'Access-Control-Max-Age': 1728000,
        
       },
+      // interceptors: {
+      //   request: [axiosLogger.requestLogger],
+      //   response: [axiosLogger.responseLogger],
+      // },
 })
+
+
+
 
 api.interceptors.response.use(
     async (response) => {

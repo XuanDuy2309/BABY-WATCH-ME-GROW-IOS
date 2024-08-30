@@ -9,7 +9,8 @@ import React, { useContext, useState } from "react";
 import Loader from "@/components/Loader";
 import { router } from "expo-router";
 import { GlobalContext } from "@/context/GlobalProvider";
-import Checkbox from "expo-checkbox";
+import CheckBox from "@/components/CheckBox";
+
 
 const signUp = () => {
   const { handleSignUp, isLoading } = useContext(GlobalContext);
@@ -35,38 +36,38 @@ const signUp = () => {
           onChangeText={(text) => handleInput("user_name", text)}
           placeholder="Username"
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-4"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
         />
         <TextInput
           onChangeText={(text) => handleInput("email", text)}
           placeholder="Email"
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-2"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
         />
         <TextInput
           onChangeText={(text) => handleInput("password", text)}
           placeholder="Password"
           secureTextEntry={true}
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-2"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
         />
         <TextInput
           onChangeText={(text) => handleInput("confirm_password", text)}
           placeholder="Confirm password"
           secureTextEntry={true}
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-2"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
         />
-        <View className="flex-row gap-2 items-center w-4/5 mt-4">
-          <Checkbox
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? "#4630EB" : undefined}
-          />
-          <Text>I agree to the terms & policy</Text>
+        <View className="flex-row items-center w-4/5 mt-4">
+          <CheckBox checked={isChecked} onChange={() => setChecked(!isChecked)}/>
+          <Text className="ml-2">I agree to the terms & policy</Text>
         </View>
         <TouchableOpacity
-          onPress={() => handleSignUp(formData)}
+          onPress={() => handleSignUp(formData, isChecked)}
           className="w-4/5 h-11 bg-black rounded justify-center items-center my-3"
         >
           <Text className="text-xl text-white ">Sign up</Text>

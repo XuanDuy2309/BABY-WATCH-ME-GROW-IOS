@@ -7,6 +7,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { GlobalContext } from '@/context/GlobalProvider';
 import { getHisUpload, uploadImage } from '@/service/image';
 import Loader from './Loader';
+import * as FileSystem from 'expo-file-system';
+import { ImagePickerOptions } from 'expo-image-picker';
+
+
 
 const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, handleClose: () => void, handleUploadFace: (img: any) => void }) => {
     const { user } = useContext(GlobalContext);
@@ -18,19 +22,29 @@ const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
-        });
+          });
 
         if (!result.canceled) {
-            console.log("result", result.assets[0].uri);
             setLoading(true);
-            const file = result.assets[0].uri;
-            // console.log("file", file);
+            // console.log(result.assets[0].uri);
             const formData = new FormData();
-            formData.append("src_img", file);
+
+            formData.append('src_img', {
+                uri: result.assets[0].uri,
+                type: result.assets[0].type,
+                name: 'image.jpg',
+            });
             // console.log("formData", formData);
             try {
                 const result = await uploadImage(formData, user);
-                console.log(result);
+                if(result.data.message) {
+                    alert(result.data.message);
+                    setLoading(false);
+                    handleClose();
+                    return;
+                }
+                handleUploadFace(result.data);
+                handleClose();
                 setLoading(false);
 
             } catch (err) {
@@ -54,7 +68,7 @@ const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean,
                 setLoading(true);
                 const res = await getHisUpload(user.id_user);
                 setData(res.data.image_links_video);
-                console.log(res.data.image_links_video);
+                // console.log(res.data.image_links_video);
                 setLoading(false);
             } catch (err) {
                 alert(err);
@@ -96,7 +110,9 @@ const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean,
                     }
 
 
-                    <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl' onPress={openPicker}>
+                    <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl' 
+                    onPress={openPicker}
+                    >
                         <Text className='text-lg text-white font-bold'>Upload new face</Text>
                     </TouchableOpacity>
 

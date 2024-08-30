@@ -12,6 +12,7 @@ const images = {
     cardItem6: require('./cardItem6.png'),
     father: require('./father.png'),
     mother: require('./mother.png'),
+    baby: require('./baby.png'),
     search: require('./search.png'),
 }
 export default images;

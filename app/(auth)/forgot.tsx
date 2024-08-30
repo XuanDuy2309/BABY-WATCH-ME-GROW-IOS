@@ -50,7 +50,8 @@ const signIn = () => {
           onChangeText={(text) => handleInput("email", text)}
           placeholder="Email"
           placeholderTextColor={"#ccc"}
-          className="text-black text-lg border w-4/5 rounded-lg p-4 mt-4"
+          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
         />
         <TouchableOpacity
           onPress={handleForgotPass}

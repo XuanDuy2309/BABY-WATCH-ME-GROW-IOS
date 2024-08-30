@@ -39,41 +39,22 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(home)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="template/[title]"
-          options={{
-            headerShown: true,
-            headerTitle: "All templates",
-            headerTitleAlign: "center",
-            headerTitleStyle: { fontSize: 30, fontWeight: 600 },
-            headerLeft: () => (
-              <AntDesign
-                name="left"
-                size={24}
-                color="black"
-                onPress={() => router.back()}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="swap/[generator]"
-          options={{
-            headerShown: true,
-            headerTitle: "Generator",
-            headerTitleAlign: "center",
-            headerTitleStyle: { fontSize: 30, fontWeight: 600 },
-            headerLeft: () => (
-              <AntDesign
-                name="left"
-                size={24}
-                color="black"
-                onPress={() => router.back()}
-              />
-            ),
-          }}
-        />
+        <Stack.Screen name="(swap)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="template/[title]" options={{
+          headerShown: true,
+          headerTitle: "All Templates",
+          headerTitleStyle: { fontSize: 30, fontWeight: 600 },
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <AntDesign
+              name="left"
+              size={24}
+              color="black"
+              onPress={() => router.back()}
+            />)
+
+        }} />
         <Stack.Screen name="+not-found" options={{ headerShown: false }} />
       </Stack>
       <StatusBar backgroundColor="#161622" style="dark" />
