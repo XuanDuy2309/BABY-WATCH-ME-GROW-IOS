@@ -1,13 +1,13 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { router, Stack } from 'expo-router'
 import AntDesign from '@expo/vector-icons/AntDesign'
-// import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
+import  { AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 
-const adUnitId = 'ca-app-pub-5372862349743986/1123321159';
-
+const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-5372862349743986/1123321159';
 
 const _layout = () => {
+    
     return (
         <>
             <Stack>
@@ -97,7 +97,13 @@ const _layout = () => {
                     }}
                 />
             </Stack>
-            {/* <BannerAd unitId={adUnitId} size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER} /> */}
+            <BannerAd
+                unitId={adUnitId}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                requestOptions={{
+                    requestNonPersonalizedAdsOnly: true,
+                }}
+            />
 
         </>
     )

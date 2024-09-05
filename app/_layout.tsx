@@ -15,6 +15,7 @@ import GlobalProvider from "@/context/GlobalProvider";
 import { StatusBar } from "expo-status-bar";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
+
 // Prevent the splash screen from auto-hiding before asset loading is cromplete.
 SplashScreen.preventAutoHideAsync();
 

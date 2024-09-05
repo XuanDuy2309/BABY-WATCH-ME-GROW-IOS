@@ -1,9 +1,12 @@
 import { View, Text, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import images from "@/assets/images";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { GlobalContext } from "@/context/GlobalProvider";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const item1 = ({ title }: { title: any }) => {
+  const {handleShowAds} = useContext(GlobalContext);
   if (title == "item1") {
     return (
       <View className="flex-1 relative w-full h-full">
@@ -52,10 +55,15 @@ const item1 = ({ title }: { title: any }) => {
           create family photos
         </Text>
         <View className="absolute w-full bottom-24">
-          <Link
-            href={"/(home)"}
-            className="px-7 py-3 rounded-lg opacity-50 bg-black text-white font-bold text-xl mx-auto"
-          >Get start</Link>
+          <TouchableOpacity
+            onPress={()=>{
+              router.push('/(home)')
+              handleShowAds();
+            }}
+            className="px-7 py-3 rounded-lg opacity-50 bg-black  mx-auto"
+          >
+            <Text className="text-white font-bold text-xl">Get start</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );

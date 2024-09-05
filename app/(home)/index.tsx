@@ -6,6 +6,8 @@ import images from "@/assets/images";
 import { router } from "expo-router";
 import { GlobalContext } from "@/context/GlobalProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ResizeMode, Video } from "expo-av";
+import videos from "@/assets/videos";
 
 const index = () => {
   const { user, handleSignOut } = useContext(GlobalContext);
@@ -33,6 +35,18 @@ const index = () => {
                 <Text className="font-semibold text-3xl text-center">
                   Wacth me grow
                 </Text>
+                <Text className="text-2xl font-bold mt-3">
+                  About us
+                </Text>
+                <Video 
+                  source={ videos.intro}
+                  useNativeControls
+                  resizeMode={ResizeMode.COVER}
+                  isLooping
+                  shouldPlay
+                  isMuted={true}
+                  className="w-full h-[180px] bg-black mt-2 rounded-lg"
+                />
               </View>
             );
           }}

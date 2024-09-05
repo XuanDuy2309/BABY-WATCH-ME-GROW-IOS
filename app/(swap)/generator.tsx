@@ -91,7 +91,7 @@ const Generator = () => {
                         const asset = await MediaLibrary.createAssetAsync(downloadResult.uri);
                         await MediaLibrary.createAlbumAsync('MyImages', asset, false);
 
-                        console.log(`Image saved to Photos: ${asset.uri}`);
+                        Alert.alert('Success', 'Images have been saved successfully to your Photos.');
                         return asset.uri;
                     } catch (error: any) {
                         console.error(`Failed to download ${result}:`, error.message);

@@ -121,6 +121,7 @@ const DadAndMom = () => {
             await MediaLibrary.createAlbumAsync('MyVideos', asset, false);
 
             console.log(`Video saved to Photos: ${asset.uri}`);
+            Alert.alert('Success', 'Video has been saved successfully to your Photos.');
             return asset.uri;
           } catch (error: any) {
             console.error(`Failed to download ${result}:`, error.message);

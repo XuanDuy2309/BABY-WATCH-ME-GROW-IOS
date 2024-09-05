@@ -66,7 +66,7 @@ const TimeMachine = () => {
     try {
       const res = await handleTimeMachine(user, srcSwap, id);
       setResult((prev) => prev = res.data.sukien_video.link_vid_da_swap);
-      // console.log(res.data.sukien_video.link_vid_da_swap);
+      console.log(res.data.sukien_video.link_vid_da_swap);
 
       setLoading(false);
     } catch (err) {
@@ -98,6 +98,7 @@ const TimeMachine = () => {
             await MediaLibrary.createAlbumAsync('MyVideos', asset, false);
 
             console.log(`Video saved to Photos: ${asset.uri}`);
+            Alert.alert('Success', 'Video has been saved successfully to your Photos.');
             return asset.uri;
           } catch (error: any) {
             console.error(`Failed to download ${result}:`, error.message);

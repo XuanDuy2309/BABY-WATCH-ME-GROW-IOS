@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/assets/images";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -17,6 +17,8 @@ import Loader from "@/components/Loader";
 import { ResizeMode, Video } from "expo-av";
 import ReactPaginate from "react-paginate";
 import { router, useLocalSearchParams } from "expo-router";
+import { GlobalContext } from "@/context/GlobalProvider";
+import CardTemplate from "@/components/CardTemplate";
 
 const listTempl = [
     { id: "0", title: "Time Machine", url: "time_machine_temp" },
@@ -25,6 +27,7 @@ const listTempl = [
 ];
 
 const Template = () => {
+    const { handleShowAds } = useContext(GlobalContext);
     const { title } = useLocalSearchParams();
     const query = listTempl.find((item) => item.title === title);
     const [currentTempl, setCurrentTempl] = useState<any>(query);
@@ -39,17 +42,7 @@ const Template = () => {
         setCurrentPage(e);
     }
 
-    const handleGoToSwap = (item:any)=>{
-        if (currentTempl.title === "Kid & Mom") {
-            router.push(`/kid&mom/${item.folder_name}`);
-            return;
-        }
-        if(currentTempl.title === "Dad & Mom"){
-            router.push(`/dad&mom/${item.id}`);
-            return;
-        }
-        router.push(`/timemachine/${item.id}`);
-    }
+    
 
     const fetchData = async () => {
         if (currentTempl.title !== "Kid & Mom") {
@@ -133,27 +126,11 @@ const Template = () => {
                 contentContainerStyle={{ gap: 8 }}
                 columnWrapperStyle={{ gap: 8 }}
                 renderItem={({ item }) => {
-                    if (currentTempl.title === "Kid & Mom") {
-                        return (
-                            <TouchableOpacity className="flex-1 h-[279px] rounded overflow-hidden mt-4" onPress={()=>handleGoToSwap(item)}>
-                                <Image
-                                    source={{ uri: item.image_sample }}
-                                    className="w-full h-full object-cover"
-                                />
-                            </TouchableOpacity>
-                        );
-                    }
-                    // console.log(item.linkgoc);
                     return (
-                        <TouchableOpacity className="flex-1 h-[279px] rounded overflow-hidden mt-4 bg-black" onPress={() => handleGoToSwap(item)}>
-                            <Video
-                                source={{ uri: item.linkgoc }}
-                                useNativeControls={true}
-                                resizeMode={ResizeMode.CONTAIN}
-                                isLooping
-                                className="w-full h-full object-cover"
-                            />
-                        </TouchableOpacity>
+                        <CardTemplate
+                            item={item}
+                            currentTempl={currentTempl}
+                        />
                     );
                 }}
             />
