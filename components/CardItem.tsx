@@ -11,6 +11,7 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
   return (
     <TouchableOpacity
       onPress={() => {
+        // router.push('/about1');
         if(!user){
           Alert.alert("Opp...!","Log in or register to explore unique features.",[
             {

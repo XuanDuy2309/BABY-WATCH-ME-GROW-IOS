@@ -39,6 +39,7 @@ export default function RootLayout() {
     <GlobalProvider>
       <Stack>
         <Stack.Screen name="(home)" options={{ headerShown: false }} />
+        <Stack.Screen name="(payment)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(swap)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />

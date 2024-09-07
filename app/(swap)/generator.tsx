@@ -153,7 +153,7 @@ const Generator = () => {
                     <TouchableOpacity onPress={handleDown}>
                         <DownLoad />
                     </TouchableOpacity>
-                    <View className='w-full h-[220px] mt-4'>
+                    <View className='w-full h-[220px] mt-4 overflow-hidden'>
                         {
                             result ? (
                                 <TouchableOpacity className='w-full h-full' onPress={() => { setIsDetail(true) }}>

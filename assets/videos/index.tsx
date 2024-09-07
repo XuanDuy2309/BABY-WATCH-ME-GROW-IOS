@@ -1,5 +1,6 @@
 const videos ={
     intro: require('./babymobile.mp4'),
+    dadPay: require('./dadandmom.mp4'),
 
 }
 

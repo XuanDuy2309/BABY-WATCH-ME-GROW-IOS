@@ -112,27 +112,8 @@ const NewBorn = () => {
       Alert.alert('Permission required', 'You need to grant media library permissions to save images.');
       return;
     }
-
-    const promises = resultList.map(async (result: string) => {
-      try {
-        const fileExtension = '.jpg'; // Adjust this if your URLs are not JPEG images
-        const fileUri = `${FileSystem.documentDirectory}me_${Math.floor(Date.now())}${fileExtension}`;
-        const downloadResult = await FileSystem.downloadAsync(result, fileUri);
-
-        const asset = await MediaLibrary.createAssetAsync(downloadResult.uri);
-        await MediaLibrary.createAlbumAsync('MyImages', asset, false);
-
-        console.log(`Image saved to Photos: ${asset.uri}`);
-        Alert.alert('Success', 'Images have been saved successfully to your Photos.');
-        return asset.uri;
-      } catch (error: any) {
-        console.error(`Failed to download ${result}:`, error.message);
-        throw error;
-      }
-    });
-
-
-    Alert.alert('Download', 'Do you want to download the image?', [
+  
+    Alert.alert('Download', 'Do you want to download the images?', [
       {
         text: 'Cancel',
         style: 'cancel',
@@ -141,16 +122,28 @@ const NewBorn = () => {
         text: 'OK',
         onPress: async () => {
           try {
+            const promises = resultList.map(async (result: string) => {
+              const fileExtension = '.jpg'; // Adjust this if your URLs are not JPEG images
+              const fileUri = `${FileSystem.documentDirectory}me_${Math.floor(Date.now())}${fileExtension}`;
+              const downloadResult = await FileSystem.downloadAsync(result, fileUri);
+  
+              const asset = await MediaLibrary.createAssetAsync(downloadResult.uri);
+              await MediaLibrary.createAlbumAsync('MyImages', asset, false);
+  
+              // console.log(`Image saved to Photos: ${asset.uri}`);
+              return asset.uri;
+            });
+  
             const results = await Promise.all(promises);
             Alert.alert('Success', 'Images have been saved successfully to your Photos.');
             console.log('Saved images:', results);
           } catch (error: any) {
             Alert.alert('Error', `Something went wrong: ${error.message}`);
-            console.log(error.message);
+            console.error(error.message);
           }
         },
       },
-    ])
+    ]);
   };
   const handleDown = () => {
     console.log("press");

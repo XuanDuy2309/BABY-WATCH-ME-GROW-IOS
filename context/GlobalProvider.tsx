@@ -19,7 +19,9 @@ interface GlobalContextType {
   handleSignUp: (formData: any, checkTerms: boolean) => void;
   handleSignOut: (formData: any) => void;
   handleShowAds: () => void;
+  handleSetCount: (num:number) => void;
   user: IUser;
+  count: number;
   isLoading: boolean;
 }
 
@@ -28,6 +30,7 @@ export const GlobalContext = createContext<GlobalContextType>({
   handleSignUp: () => { },
   handleSignOut: () => { },
   handleShowAds: () => { },
+  handleSetCount: () => { },
   user: {
     device_register: "",
     email: "",
@@ -37,6 +40,7 @@ export const GlobalContext = createContext<GlobalContextType>({
     token: "",
     user_name: "",
   },
+  count: 0,
   isLoading: false,
 });
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -45,6 +49,7 @@ const GlobalProvider = ({ children }: { children: any }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<IUser | any>();
   const [loadAds, setLoadAds] = useState(false);
+  const [count,setCount] = useState(0);
 
   const handleSignIn = async (data: {
     email_or_username: "";
@@ -59,18 +64,23 @@ const GlobalProvider = ({ children }: { children: any }) => {
         formData.append("password", data.password);
         // console.log(formData);
 
-        const result = await signin(formData)
-        if (result.data.messages || !result || !result.data || result === undefined) {
+        const result = await signin(formData);
+        // console.log(result.data.messages);
+        if (result.data.message === "Success Login Account") {
+          console.log(result.data);
+          setUser(result.data);
+          setIsLoading(false);
+          await AsyncStorage.setItem("user", JSON.stringify(result.data));
+          router.navigate('/(home)');
           console.log(result.data.message);
-          Alert.alert("Error", "verify password error wrong password");
+          Alert.alert("Error", result.data.message);
           setIsLoading(false);
           return;
         }
-        setUser(result.data);
+        console.log(result.data.message);
+        Alert.alert("Error", result.data.message);
         setIsLoading(false);
-        await AsyncStorage.setItem("user", JSON.stringify(result.data));
-        router.navigate('/(home)');
-        console.log('ok', result);
+
       } catch (err) {
         // console.log(err);
         setIsLoading(false);
@@ -156,6 +166,11 @@ const GlobalProvider = ({ children }: { children: any }) => {
   // if (!loadAds) {
   //   return null;
   // }
+  const handleSetCount = (num:number) => {
+    setCount(num);
+  }
+
+
 
   return (
     <GlobalContext.Provider
@@ -164,6 +179,8 @@ const GlobalProvider = ({ children }: { children: any }) => {
         handleSignUp,
         handleSignOut,
         handleShowAds,
+        handleSetCount,
+        count,
         isLoading,
         user,
       }}

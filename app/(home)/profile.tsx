@@ -126,14 +126,15 @@ const profile = () => {
             contentContainerStyle={{ gap: 8 }}
             horizontal
             renderItem={({ item }) => {
-              // const str = item.link_video_da_swap;
-              // // console.log(str);
-              // const url = str.replace("futurelove.online", "photo.gachmen.org");
+              const str = item.link_video_da_swap;
+              // console.log(str);
+              const url = str.replace("futurelove.online", "photo.gachmen.org");
+              console.log(url);
 
               return (
                 <>
                   <TouchableOpacity className='w-[300px] h-[200px] rounded'>
-                    <Video source={{ uri: item }}
+                    <Video source={{ uri: url }}
                       useNativeControls={true}
                       resizeMode={ResizeMode.CONTAIN}
                       isLooping

@@ -5,6 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import images from "@/assets/images";
 import Item from "./item";
+// import { Analytics, PageHit } from 'react-native-googleanalytics';
+
+// const analytics = new Analytics('UA-XXXXXX-Y');
+// analytics.hit(new PageHit('Home'));
 
 
 const index = () => {
@@ -16,7 +20,7 @@ const index = () => {
 
 
   return (
-    <SafeAreaView>
+    <>
       <View className="relative h-full w-full">
         <Carousel
           loop={false}
@@ -46,7 +50,7 @@ const index = () => {
       </View>
 
 
-    </SafeAreaView>
+    </>
   );
 };
 
