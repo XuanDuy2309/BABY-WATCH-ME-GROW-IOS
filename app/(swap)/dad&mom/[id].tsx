@@ -88,7 +88,9 @@ const DadAndMom = () => {
     setLoading(true);
     try {
       const res = await handleDadAndMom(user, randomLink, id);
-      setResult((prev)=>prev=res.data.sukien_video.link_vid_da_swap);
+      const str = res.data.sukien_video.link_vid_da_swap
+      const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
+      setResult((prev) => prev = url);
       // console.log(res.data);
 
       setLoading(false);
@@ -182,7 +184,7 @@ const DadAndMom = () => {
         <ButtonStart onPress={handleSwap} />
         <View className='mt-8 flex-col justify-start items-end'>
           <TouchableOpacity onPress={handleDown}>
-          <DownLoad />
+            <DownLoad />
           </TouchableOpacity>
           <View className='w-full h-[220px] mt-4 bg-[#C3B9B9] overflow-hidden relative' onLayout={(e) => {
             const width = e.nativeEvent.layout.width;

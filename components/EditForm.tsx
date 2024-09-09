@@ -9,45 +9,46 @@ import { getHisUpload, uploadImage } from '@/service/image';
 import Loader from './Loader';
 import * as FileSystem from 'expo-file-system';
 import { ImagePickerOptions } from 'expo-image-picker';
-import { changePassword } from '@/service/auth';
+import { changePassword, deleteAccount } from '@/service/auth';
 
 
 
 const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, handleClose: () => void, handleUploadFace: (img: any) => void }) => {
-    const { user } = useContext(GlobalContext);
+    const { user, handleDeleteAccount } = useContext(GlobalContext);
     const [data, setData] = useState([]);
-    const [changePass, setChangePass] = useState(false);
+    const [action, setAction] = useState('upload');
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         password: "",
         new_password: "",
         confirm_new_password: "",
-      });
+    });
+    const [delPass, setDelPass] = useState('');
 
-      const handleInput = (field: string, value: string) => {
+    const handleInput = (field: string, value: string) => {
         setFormData({ ...formData, [field]: value });
-      };
+    };
 
-      const handleChangePassword = async ()=>{
-        if ( formData.password === "" || formData.new_password === "" || formData.confirm_new_password === "") {
-          alert("Please fill in all fields");
-          return;
+    const handleChangePassword = async () => {
+        if (formData.password === "" || formData.new_password === "" || formData.confirm_new_password === "") {
+            alert("Please fill in all fields");
+            return;
         }
         if (formData.password === formData.new_password) {
-          alert("New password and old password not match");
-          return;
+            alert("New password and old password not match");
+            return;
         }
 
-        if (formData.new_password!== formData.confirm_new_password) {
-          alert("New password and confirm new password not match");
-          return;
+        if (formData.new_password !== formData.confirm_new_password) {
+            alert("New password and confirm new password not match");
+            return;
         }
         setLoading(true);
         try {
             const form = new FormData();
             form.append("old_password", formData.password);
             form.append("new_password", formData.new_password);
-            const result = await changePassword(form,user);
+            const result = await changePassword(form, user);
             if (result.data.message) {
                 alert(result.data.message);
                 setLoading(false);
@@ -61,7 +62,9 @@ const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, 
             console.log(error);
             setLoading(false);
         }
-      }
+    }
+
+
 
     const openPicker = async () => {
         const result: any = await ImagePicker.launchImageLibraryAsync({
@@ -126,47 +129,19 @@ const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, 
     useEffect(() => {
         fetchData()
     }, []);
-    if (isOpen) {
+    if (isOpen && action === 'upload') {
         return (
             <View className='w-full h-full justify-center items-center  absolute top-0 left-0 right-0'>
                 <View className='w-full h-fit bg-white mt-6 p-4 border rounded-3xl'>
                     <View className='flex-row justify-between'>
-                        <Text className='text-2xl font-bold'>{changePass ? "Change Password" : "Edit Profile"}</Text>
+                        <Text className='text-2xl font-bold'>{"Edit Profile"}</Text>
                         <TouchableOpacity onPress={handleClose}>
                             <AntDesign name="close" size={24} color="black" />
                         </TouchableOpacity>
 
                     </View>
                     {
-                        changePass ? (
-                            <View className="flex-col w-full justify-start items-center">
-                                
-                                <TextInput
-                                    onChangeText={(text) => handleInput("password", text)}
-                                    placeholder="Old Password"
-                                    secureTextEntry={true}
-                                    placeholderTextColor={"#ccc"}
-                                    className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
-
-                                />
-                                <TextInput
-                                    onChangeText={(text) => handleInput("new_password", text)}
-                                    placeholder="New Password"
-                                    secureTextEntry={true}
-                                    placeholderTextColor={"#ccc"}
-                                    className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
-
-                                />
-                                <TextInput
-                                    onChangeText={(text) => handleInput("confirm_new_password", text)}
-                                    placeholder="Confirm New Password"
-                                    secureTextEntry={true}
-                                    placeholderTextColor={"#ccc"}
-                                    className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
-
-                                />
-                            </View>
-                        ) : data.length > 0 ? <ScrollView horizontal className='mt-4'>
+                        data.length > 0 ? <ScrollView horizontal className='mt-4'>
                             {data.map((item, index) => {
                                 return (
                                     <TouchableOpacity className='w-[180px] h-[270px] mr-4 rounded-lg overflow-hidden'
@@ -190,26 +165,93 @@ const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, 
 
                     <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
                         onPress={() => {
-                            if(changePass){
-                                handleChangePassword();
-                                handleClose();
-                                return;
-                            }
                             openPicker();
                         }}
                     >
-                        <Text className='text-lg text-white font-bold'>{changePass ? "Save" : "Add Face"}</Text>
+                        <Text className='text-lg text-white font-bold'>{"Add Face"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
-                        onPress={() => { 
-                            if (changePass){
-                                setChangePass(false);
-                                return;
-                            }
-                            setChangePass(true);
+                        onPress={() => {
+                            setAction('changePass');
                         }}
                     >
-                        <Text className='text-lg text-white font-bold'>{changePass ? "Cancel" : "Change Password"}</Text>
+                        <Text className='text-lg text-white font-bold'>{"Change Password"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
+                        onPress={() => {
+                            setAction('delete');
+                        }}
+                    >
+                        <Text className='text-lg text-white font-bold'>{"Delete Account"}</Text>
+                    </TouchableOpacity>
+
+                </View>
+                <Loader isLoading={loading} />
+            </View>
+
+        )
+
+    }
+    if (isOpen && action === 'changePass') {
+        return (
+            <View className='w-full h-full justify-center items-center  absolute top-0 left-0 right-0'>
+                <View className='w-full h-fit bg-white mt-6 p-4 border rounded-3xl'>
+                    <View className='flex-row justify-between'>
+                        <Text className='text-2xl font-bold'>{"Change Password"}</Text>
+                        <TouchableOpacity onPress={handleClose}>
+                            <AntDesign name="close" size={24} color="black" />
+                        </TouchableOpacity>
+
+                    </View>
+
+                    <View className="flex-col w-full justify-start items-center">
+
+                        <TextInput
+                            onChangeText={(text) => handleInput("password", text)}
+                            placeholder="Old Password"
+                            secureTextEntry={true}
+                            placeholderTextColor={"#ccc"}
+                            className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
+                        />
+                        <TextInput
+                            onChangeText={(text) => handleInput("new_password", text)}
+                            placeholder="New Password"
+                            secureTextEntry={true}
+                            placeholderTextColor={"#ccc"}
+                            className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
+                        />
+                        <TextInput
+                            onChangeText={(text) => handleInput("confirm_new_password", text)}
+                            placeholder="Confirm New Password"
+                            secureTextEntry={true}
+                            placeholderTextColor={"#ccc"}
+                            className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
+                        />
+                    </View>
+
+
+
+
+
+
+                    <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
+                        onPress={() => {
+                            handleChangePassword();
+                            handleClose();
+                        }}
+                    >
+                        <Text className='text-lg text-white font-bold'>{"Save"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
+                        onPress={() => {
+                            setAction('upload');
+
+                        }}
+                    >
+                        <Text className='text-lg text-white font-bold'>{"Cancel"}</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -218,6 +260,54 @@ const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, 
 
         )
     }
+    if (isOpen && action === 'delete') {
+        return (
+            <View className='w-full h-full justify-center items-center  absolute top-0 left-0 right-0'>
+                <View className='w-full h-fit bg-white mt-6 p-4 border rounded-3xl'>
+                    <View className='flex-row justify-between'>
+                        <Text className='text-2xl font-bold'>{"Delete Account"}</Text>
+                        <TouchableOpacity onPress={handleClose}>
+                            <AntDesign name="close" size={24} color="black" />
+                        </TouchableOpacity>
+
+                    </View>
+
+                    <View className="flex-col w-full justify-start items-center">
+
+                        <TextInput
+                            onChangeText={(text) => setDelPass(text)}
+                            placeholder="Password"
+                            secureTextEntry={true}
+                            placeholderTextColor={"#ccc"}
+                            className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+
+                        />
+
+                        <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
+                            onPress={() => {
+                                handleDeleteAccount(delPass);
+                                handleClose();
+                            }}
+                        >
+                            <Text className='text-lg text-white font-bold'>{"Save"}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
+                            onPress={() => {
+                                setAction('upload');
+
+                            }}
+                        >
+                            <Text className='text-lg text-white font-bold'>{"Cancel"}</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                    <Loader isLoading={loading} />
+                </View>
+            </View>
+        )
+
+    }
+
     return <></>
 }
 

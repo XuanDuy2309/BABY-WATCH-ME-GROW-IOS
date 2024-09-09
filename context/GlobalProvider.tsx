@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/interface/IUser";
-import { getUser, signin, signup } from "@/service/auth";
+import { getUser, signin, signup, deleteAccount } from "@/service/auth";
 import signIn from "@/app/(auth)/sign-in";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect, router } from "expo-router";
@@ -18,6 +18,7 @@ interface GlobalContextType {
   handleSignIn: (formData: any) => void;
   handleSignUp: (formData: any, checkTerms: boolean) => void;
   handleSignOut: (formData: any) => void;
+  handleDeleteAccount: (formData: any) => void;
   handleShowAds: () => void;
   handleSetCount: (num:number) => void;
   user: IUser;
@@ -29,6 +30,7 @@ export const GlobalContext = createContext<GlobalContextType>({
   handleSignIn: () => { },
   handleSignUp: () => { },
   handleSignOut: () => { },
+  handleDeleteAccount: () => { },
   handleShowAds: () => { },
   handleSetCount: () => { },
   user: {
@@ -72,8 +74,7 @@ const GlobalProvider = ({ children }: { children: any }) => {
           setIsLoading(false);
           await AsyncStorage.setItem("user", JSON.stringify(result.data));
           router.navigate('/(home)');
-          console.log(result.data.message);
-          Alert.alert("Error", result.data.message);
+          Alert.alert("Message", result.data.message);
           setIsLoading(false);
           return;
         }
@@ -139,6 +140,27 @@ const GlobalProvider = ({ children }: { children: any }) => {
     router.navigate('/(home)');
   }
 
+  const handleDeleteAccount = async (password: string) => {
+    if (password === "") {
+      alert("Please enter your password");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("password", password);
+    const result = await deleteAccount(formData, user);
+    console.log(result);
+    if (result.data.message) {
+      alert(result.data.message);
+      return;
+    }
+    alert("Delete account success");
+    setUser(null);
+    AsyncStorage.removeItem("user");
+    router.navigate('/(home)');
+    
+  }
+
   const handleShowAds = () => {
     interstitial.show();
   }
@@ -178,6 +200,7 @@ const GlobalProvider = ({ children }: { children: any }) => {
         handleSignIn,
         handleSignUp,
         handleSignOut,
+        handleDeleteAccount,
         handleShowAds,
         handleSetCount,
         count,

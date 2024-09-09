@@ -16,6 +16,10 @@ export const changeAvatar = (formData: any, user: IUser) => api.post(`/changeava
     headers: { 'Authorization': `Bearer ${user.token}` }
 })
 
-export const getUser = (id: string | undefined, token: string) => api.get(`/profile/${id}`, {
+export const deleteAccount = (formData:any,user: IUser) => api.post(`/deleteuser/${user.id_user}`,formData,{
+    headers: { 'Authorization': `Bearer ${user.token}` }
+})
+
+export const getUser = (id: string | undefined, token: string) => api.get(`/profile/${id}`, {  
     headers: { 'Authorization': `Bearer ${token}` }
 })

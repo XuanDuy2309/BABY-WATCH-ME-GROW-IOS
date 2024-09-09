@@ -207,10 +207,12 @@ const KidAndMom = () => {
                     style={animatedStyle}
                   >
                     {
-                      result.map((item, index) => {
+                      result.map((item:any, index) => {
+                        const str = item;
+                        const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
                         return (
                           <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { setIsDetail(true); setSrcDetail(item) }}>
-                            <Image source={{ uri: item }} className='w-full h-full object-contain' />
+                            <Image source={{ uri: url }} className='w-full h-full object-contain' />
                           </TouchableOpacity>
                         )
                       })

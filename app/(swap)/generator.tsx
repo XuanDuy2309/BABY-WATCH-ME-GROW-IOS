@@ -61,6 +61,8 @@ const Generator = () => {
         try {
             const result = await handleGenerate(user, srcSwap);
             // console.log(result.data.sukien_baby[0].link_da_swap);
+            const str = result.data.sukien_baby[0].link_da_swap;
+            const url = str.replace('/var/www/build_futurelove/',"https://photo.gachmen.org/");
             setResult(result.data.sukien_baby[0].link_da_swap);
             setLoading(false);
         } catch (err) {

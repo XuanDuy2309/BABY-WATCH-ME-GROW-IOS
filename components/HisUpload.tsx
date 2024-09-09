@@ -98,6 +98,7 @@ const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean,
                                         onPress={() => {
                                             handleUploadFace(item);
                                             handleClose();
+                                            // console.log(item);
                                         }}>
                                         <Image source={{ uri: item }} className='w-full h-full object-cover' />
                                     </TouchableOpacity>

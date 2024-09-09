@@ -65,7 +65,9 @@ const TimeMachine = () => {
     setLoading(true);
     try {
       const res = await handleTimeMachine(user, srcSwap, id);
-      setResult((prev) => prev = res.data.sukien_video.link_vid_da_swap);
+      const str = res.data.sukien_video.link_vid_da_swap;
+      const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
+      setResult((prev) => prev = url);
       console.log(res.data.sukien_video.link_vid_da_swap);
 
       setLoading(false);

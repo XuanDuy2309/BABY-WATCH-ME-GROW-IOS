@@ -112,7 +112,7 @@ const NewBorn = () => {
       Alert.alert('Permission required', 'You need to grant media library permissions to save images.');
       return;
     }
-  
+
     Alert.alert('Download', 'Do you want to download the images?', [
       {
         text: 'Cancel',
@@ -126,14 +126,14 @@ const NewBorn = () => {
               const fileExtension = '.jpg'; // Adjust this if your URLs are not JPEG images
               const fileUri = `${FileSystem.documentDirectory}me_${Math.floor(Date.now())}${fileExtension}`;
               const downloadResult = await FileSystem.downloadAsync(result, fileUri);
-  
+
               const asset = await MediaLibrary.createAssetAsync(downloadResult.uri);
               await MediaLibrary.createAlbumAsync('MyImages', asset, false);
-  
+
               // console.log(`Image saved to Photos: ${asset.uri}`);
               return asset.uri;
             });
-  
+
             const results = await Promise.all(promises);
             Alert.alert('Success', 'Images have been saved successfully to your Photos.');
             console.log('Saved images:', results);
@@ -209,10 +209,12 @@ const NewBorn = () => {
                     style={animatedStyle}
                   >
                     {
-                      result.map((item, index) => {
+                      result.map((item:any, index) => {
+                        const str = item;
+                        const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
                         return (
                           <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { setIsDetail(true) }}>
-                            <Image source={{ uri: item }} className='w-full h-full object-contain' />
+                            <Image source={{ uri: url }} className='w-full h-full object-contain' />
                           </TouchableOpacity>
                         )
                       })

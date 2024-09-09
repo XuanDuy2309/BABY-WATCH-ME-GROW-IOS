@@ -258,7 +258,23 @@ const profile = () => {
           />
         </View>
         <TouchableOpacity
-          className="flex-1 bg-black py-2 rounded-lg my-20 px-4 mx-2"
+          className="flex-1 bg-red-600 py-2 rounded-lg mt-20 px-4 mx-2"
+          onPress={()=>{
+            Alert.alert('Delete Account', 'Are you sure?', [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: ()=>{
+                setIsOpen(true);
+              }},
+            ]);
+          }}
+        >
+          <Text className="text-white text-center font-normal text-lg">Delete Account</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="flex-1 bg-black py-2 rounded-lg mt-2 mb-20 px-4 mx-2"
           onPress={()=>{
             Alert.alert('Sign Out', 'Are you sure?', [
               {
@@ -266,6 +282,7 @@ const profile = () => {
                 style: 'cancel',
               },
               {text: 'OK', onPress: handleSignOut},
+              
             ]);
           }}
         >
