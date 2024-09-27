@@ -95,13 +95,13 @@ const _layout = () => {
       </Stack>
       <Loader isLoading={isLoading} />
       <StatusBar backgroundColor="#161622" style="dark" />
-      <BannerAd
+      {/* <BannerAd
                 unitId={adUnitId}
                 size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                 requestOptions={{
                     requestNonPersonalizedAdsOnly: true,
                 }}
-            />
+            /> */}
     </ImageBackground>
   );
 };

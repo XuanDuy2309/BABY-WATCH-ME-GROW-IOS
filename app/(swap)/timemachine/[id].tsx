@@ -15,6 +15,7 @@ import { ResizeMode, Video } from 'expo-av';
 import { useLocalSearchParams } from 'expo-router';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
+import ProgressCircle from '@/components/ProgressCircle';
 
 const TimeMachine = () => {
   const { id } = useLocalSearchParams();
@@ -26,6 +27,7 @@ const TimeMachine = () => {
   const [srcSwap, setSrcSwap] = useState({ img1: '', img2: '' });
   const [result, setResult] = useState<string>('');
   const [wid, setWid] = useState(0);
+  const [progress, setProgress] = useState(0);
   const { user } = useContext(GlobalContext);
 
 
@@ -153,7 +155,7 @@ const TimeMachine = () => {
           <ButtonStart onPress={handleSwap} />
           <View className='mt-8 flex-col justify-start items-end'>
             <TouchableOpacity onPress={handleDown}>
-              <DownLoad width={44} height={44}/>
+              <DownLoad width={44} height={44} />
             </TouchableOpacity>
             <View className='w-full h-[220px] md:h-[440px] rounded mt-4 bg-[#C3B9B9] overflow-hidden relative' onLayout={(e) => {
               const width = e.nativeEvent.layout.width;
@@ -176,7 +178,7 @@ const TimeMachine = () => {
                   )
                   : (
                     <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                      <Loader isLoading={loading} />
+                      <ProgressCircle loading={loading}/>
                     </View>
                   )
               }

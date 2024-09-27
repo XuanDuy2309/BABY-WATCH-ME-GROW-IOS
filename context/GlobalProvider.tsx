@@ -165,25 +165,25 @@ const GlobalProvider = ({ children }: { children: any }) => {
     interstitial.show();
   }
 
-  useEffect(() => {
-    const unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-      setLoadAds(true);
-    });
+  // useEffect(() => {
+  //   const unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
+  //     setLoadAds(true);
+  //   });
 
-    const unsubscribe2 = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-      setLoadAds(false);
-      interstitial.load();
+  //   const unsubscribe2 = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
+  //     setLoadAds(false);
+  //     interstitial.load();
 
-    })
+  //   })
 
-    interstitial.load();
+  //   interstitial.load();
 
-    // Unsubscribe from events on unmount
-    return () => {
-      unsubscribe();
-      unsubscribe2();
-    };
-  }, []);
+  //   // Unsubscribe from events on unmount
+  //   return () => {
+  //     unsubscribe();
+  //     unsubscribe2();
+  //   };
+  // }, []);
 
   // if (!loadAds) {
   //   return null;

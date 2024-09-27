@@ -10,17 +10,17 @@ const CardTemplate = ({ item, currentTempl }: { item: any, currentTempl: any }) 
     const handleGoToSwap = (item: any) => {
         if (currentTempl.title === "Kid & Mom") {
             router.navigate(`/kid&mom/${item.folder_name}`);
-            handleShowAds();
+            //handleShowAds();
             return;
         }
         if (currentTempl.title === "Dad & Mom") {
             router.navigate(`/dad&mom/${item.id}`);
-            handleShowAds();
+            //handleShowAds();
 
             return;
         }
         router.navigate(`/timemachine/${item.id}`);
-        handleShowAds();
+        //handleShowAds();
 
     }
 

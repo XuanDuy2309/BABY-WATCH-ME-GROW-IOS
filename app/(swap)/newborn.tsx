@@ -14,6 +14,7 @@ import DetailProduct from '@/components/DetailProduct';
 import * as FileSystem from 'expo-file-system';
 // import * as Sharing from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
+import ProgressCircle from '@/components/ProgressCircle';
 
 const NewBorn = () => {
   const [loading, setLoading] = useState(false);
@@ -237,7 +238,7 @@ const NewBorn = () => {
                   </>
                 ) : (
                   <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                    <Loader isLoading={loading} />
+                    <ProgressCircle loading={loading} />
                   </View>
                 )
               }

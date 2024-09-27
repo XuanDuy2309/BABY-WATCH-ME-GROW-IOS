@@ -25,22 +25,22 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
         }
         if (title != "Generator" && title != "Profile"&&title != "New Born") {
           router.navigate(`/template/${title}`);
-          handleShowAds();
+          //handleShowAds();
           return;
         } 
         if (title === "Generator"){
           router.navigate('/generator');
-          handleShowAds();
+          //handleShowAds();
           return;
         }
         if (title === "New Born"){
           router.navigate('/newborn');
-          handleShowAds();
+          //handleShowAds();
           return;
         }
         if (title === "Profile"){
           router.navigate('/profile');
-          handleShowAds();
+          //handleShowAds();
           return;
         }
 

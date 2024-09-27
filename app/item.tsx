@@ -97,7 +97,7 @@ const item1 = ({ title }: { title: any }) => {
               <TouchableOpacity
                 onPress={() => {
                   router.navigate('/(home)')
-                  handleShowAds();
+                  //handleShowAds();
                 }}
                 className="px-7 py-3 rounded-lg opacity-50 bg-black  mx-auto"
               >
@@ -161,7 +161,7 @@ const item1 = ({ title }: { title: any }) => {
           <TouchableOpacity
             onPress={() => {
               router.navigate('/(home)');
-              handleShowAds();
+              //handleShowAds();
             }}
             className="px-7 py-3 rounded-lg opacity-50 bg-black  mx-auto"
           >

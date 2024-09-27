@@ -16,6 +16,7 @@ import DetailProduct from '@/components/DetailProduct';
 import * as FileSystem from 'expo-file-system';
 // import * as Sharing from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
+import ProgressCircle from '@/components/ProgressCircle'
 
 const KidAndMom = () => {
   const { id } = useLocalSearchParams()
@@ -171,7 +172,7 @@ const KidAndMom = () => {
       className="h-full w-full "
       resizeMode="cover"
     >
-      <SafeAreaView className='w-full h-full bg-white'>
+      <SafeAreaView className='w-full h-full'>
         <ScrollView className='px-5'>
           <Text className='md:w-full md:text-center md:text-xl md:font-normal'>Create a photo of a 0-3 month old baby from a photo of the parents</Text>
           <View className='flex-row w-full justify-center mt-8'>
@@ -235,7 +236,7 @@ const KidAndMom = () => {
                   </>
                 ) : (
                   <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                    <Loader isLoading={loading} />
+                    <ProgressCircle loading={loading} />
                   </View>
                 )
               }

@@ -15,6 +15,7 @@ import { ResizeMode, Video } from 'expo-av';
 import { useLocalSearchParams } from 'expo-router';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
+import ProgressCircle from '@/components/ProgressCircle';
 
 const DadAndMom = () => {
   const { id } = useLocalSearchParams();
@@ -210,7 +211,7 @@ const DadAndMom = () => {
                   </>
                 ) : (
                   <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                    <Loader isLoading={loading} />
+                    <ProgressCircle loading={loading} />
                   </View>
                 )
               }

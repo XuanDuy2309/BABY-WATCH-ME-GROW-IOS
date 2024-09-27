@@ -12,6 +12,7 @@ import { handleGenerate } from '@/service/image';
 import DetailImg from '@/components/DetailImg';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
+import ProgressCircle from '@/components/ProgressCircle';
 
 
 const Generator = () => {
@@ -168,7 +169,7 @@ const Generator = () => {
                                     </TouchableOpacity>
                                 ) : (
                                     <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                                        <Loader isLoading={loading} />
+                                        <ProgressCircle loading={loading} />
                                     </View>
                                 )
                             }
