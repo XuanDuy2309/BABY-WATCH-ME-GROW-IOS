@@ -14,6 +14,9 @@ const api = axios.create({
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, DELETE, PUT, PATCH',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Max-Age': 1728000,
+        'Content-Type':'multipart/form-data'
+
+
        
       },
       // interceptors: {

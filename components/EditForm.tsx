@@ -2,7 +2,7 @@ import { View, Text, ScrollView, Image, TouchableOpacity, Alert, TextInput } fro
 import React, { useContext, useEffect, useState } from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import images from '@/assets/images';
-import * as DocumentPicker from "expo-document-picker";
+// import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from 'expo-image-picker';
 import { GlobalContext } from '@/context/GlobalProvider';
 import { getHisUpload, uploadImage } from '@/service/image';
@@ -83,7 +83,7 @@ const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, 
                 uri: result.assets[0].uri,
                 type: result.assets[0].type,
                 name: 'image.jpg',
-            });
+            } as any);
             // console.log("formData", formData);
             try {
                 const result = await uploadImage(formData, user);

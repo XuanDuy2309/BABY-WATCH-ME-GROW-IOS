@@ -1,10 +1,11 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, ImageBackground } from "react-native";
 import React, { useContext, useState } from "react";
 import { GlobalContext } from "@/context/GlobalProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loader from "@/components/Loader";
 import { router } from "expo-router";
 import { resetPassword } from "@/service/auth";
+import images from "@/assets/images";
 
 const signIn = () => {
   const [loading, setLoading] = useState(false);
@@ -44,25 +45,31 @@ const signIn = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 w-full h-full items-center">
-        <TextInput
-          onChangeText={(text) => handleInput("email", text)}
-          placeholder="Email"
-          placeholderTextColor={"#ccc"}
-          className="text-black text-xl border rounded-lg mt-4 w-4/5 h-12 px-4 items-center"
+    <ImageBackground
+      source={images.bgTalet}
+      className="h-full w-full"
+      resizeMode="cover"
+    >
+      <SafeAreaView className="flex-1">
+        <View className="flex-1 w-full h-full items-center mt-10">
+          <TextInput
+            onChangeText={(text) => handleInput("email", text)}
+            placeholder="Email"
+            placeholderTextColor={"#ccc"}
+            className="text-black text-xl border rounded-lg mt-4 w-4/5 py-4 px-4 items-center md:text-3xl md:max-w-[700px] bg-white"
 
-        />
-        <TouchableOpacity
-          onPress={handleForgotPass}
-          className="w-4/5 h-11 bg-black rounded justify-center items-center my-3"
-        >
-          <Text className="text-xl text-white ">Reset</Text>
-        </TouchableOpacity>
-      </View>
+          />
+          <TouchableOpacity
+            onPress={handleForgotPass}
+            className="w-4/5 py-4 bg-black rounded justify-center items-center my-3 md:max-w-[700px] mt-3"
+          >
+            <Text className="text-xl text-white md:text-3xl">Reset</Text>
+          </TouchableOpacity>
+        </View>
 
-      <Loader isLoading={loading} />
-    </SafeAreaView>
+        <Loader isLoading={loading} />
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 

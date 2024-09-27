@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, FlatList, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, ScrollView, Image, FlatList, TouchableOpacity, Alert, Dimensions, ImageBackground } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { GlobalContext } from '@/context/GlobalProvider'
@@ -9,6 +9,10 @@ import { ResizeMode, Video } from 'expo-av'
 import EditForm from '@/components/EditForm'
 import { changeAvatar } from '@/service/auth'
 import DetailProduct from '@/components/DetailProduct'
+import Foundation from '@expo/vector-icons/Foundation';
+import { router } from 'expo-router'
+
+const { width } = Dimensions.get('screen');
 
 const profile = () => {
   const { user, handleSignOut } = useContext(GlobalContext);
@@ -21,6 +25,8 @@ const profile = () => {
   const [src_img, setSrc_img] = useState<any[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDetail, setIsOpenDetail] = useState(false);
+  const [hBtn, setHBtn] = useState(0);
+
 
   const handleClose = () => {
     setIsOpen(false);
@@ -101,16 +107,250 @@ const profile = () => {
     fetchNew();
     fetchBaby();
   }, []);
+
+  if (width >= 768) {
+    return (
+      <ImageBackground
+        source={images.bgTalet}
+        className="h-full w-full"
+        resizeMode="cover"
+      >
+        <ScrollView className='h-full w-full pt-4 '>
+          <View className='w-11/12 flex-row items-center mx-auto relative'>
+            <View className='h-[62px] w-[62px] rounded-full overflow-hidden bg-black'>
+              <Image source={{ uri: avatar }} resizeMode='cover' className='w-full h-full object-cover' />
+            </View>
+            <Text className='ml-4 text-2xl'>{user?.user_name}</Text>
+            <TouchableOpacity onPress={() => setIsOpen(true)}>
+              <AntDesign name="edit" size={16} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={()=>{
+                router.navigate('/aboutUs');
+              }}
+              className='flex-row justify-center items-center bg-black px-2 py-1 space-x-1 rounded absolute right-0 top-1/2'
+              onLayout={(e) => setHBtn(e.nativeEvent.layout.height)}
+              style={{ transform: [{ translateY: -hBtn / 2 }] }}
+            >
+            <Text
+            className='text-white text-xl'
+            >About us</Text>
+            <Foundation name="info" size={24} color="white" />
+          </TouchableOpacity>
+          </View>
+          <View className=" mt-8 w-fit h-fit pl-4">
+            <View className="py-6">
+              <Text className="font-semibold text-3xl">
+                Event
+              </Text>
+            </View>
+            <FlatList
+
+              data={vid}
+              keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle={{ gap: 8 }}
+              horizontal
+              renderItem={({ item }) => {
+                const str = item.link_video_da_swap;
+                // console.log(str);
+                const url = str.replace("futurelove.online", "photo.gachmen.org");
+                console.log(url);
+
+                return (
+                  <>
+                    <TouchableOpacity className='w-[300px] h-[200px] rounded'>
+                      <Video source={{ uri: url }}
+                        useNativeControls={true}
+                        resizeMode={ResizeMode.CONTAIN}
+                        isLooping
+                        className="w-full h-full" />
+                    </TouchableOpacity>
+                  </>
+                )
+
+              }}
+              ListEmptyComponent={() => <>
+                <View className='w-full flex-col items-center justify-center gap-4'>
+                  <Text className='text-xl font-bold'>Opp!</Text>
+                  <Text className='text-base'>Nothing here. Please create your video and image.</Text>
+                </View>
+              </>}
+
+            />
+          </View>
+
+          <View className=" mt-4 w-fit h-fit pl-4">
+            <View className="py-6">
+              <Text className="font-semibold text-3xl">
+                Generator
+              </Text>
+            </View>
+            <FlatList
+
+              data={gen}
+              keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle={{ gap: 8 }}
+              horizontal
+              renderItem={({ item }) => {
+                const str = item.link_da_swap;
+                const url = str.replace("futurelove.online", "photo.gachmen.org");
+                return (
+                  <>
+                    <TouchableOpacity className='w-[107px] h-[152px] rounded' onPress={() => {
+                      setIsOpenDetail(true);
+                      setSrc_img(gen);
+                    }}>
+                      <Image source={{ uri: url }} resizeMode='cover' className='w-full h-full object-cover' />
+                    </TouchableOpacity>
+                  </>
+                )
+              }}
+
+              ListEmptyComponent={() => <>
+                <View className='w-full flex-col items-center justify-center gap-4'>
+                  <Text className='text-xl font-bold'>Opp!</Text>
+                  <Text className='text-base'>Nothing here. Please create your video and image.</Text>
+                </View>
+              </>}
+            />
+          </View>
+
+          <View className=" mt-4 w-fit h-fit pl-4">
+            <View className="py-6">
+              <Text className="font-semibold text-3xl">
+                New Born
+              </Text>
+            </View>
+            <FlatList
+
+              data={newborn}
+              keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle={{ gap: 8 }}
+              horizontal
+              renderItem={({ item }) => {
+                const str = item.link_da_swap;
+                const url = str.replace("futurelove.online", "photo.gachmen.org");
+                return (
+                  <>
+                    <TouchableOpacity className='w-[107px] h-[152px] rounded' onPress={() => {
+                      setIsOpenDetail(true);
+                      setSrc_img(newborn);
+                    }}>
+                      <Image source={{ uri: url }} resizeMode='cover' className='w-full h-full object-cover' />
+                    </TouchableOpacity>
+                  </>
+                )
+              }}
+
+              ListEmptyComponent={() => <>
+                <View className='w-full flex-col items-center justify-center gap-4'>
+                  <Text className='text-xl font-bold'>Opp!</Text>
+                  <Text className='text-base'>Nothing here. Please create your video and image.</Text>
+                </View>
+              </>}
+            />
+          </View>
+
+          <View className=" mt-4 w-fit h-fit pl-4">
+            <View className="py-6">
+              <Text className="font-semibold text-3xl">
+                Kid & Mom
+              </Text>
+            </View>
+            <FlatList
+
+              data={baby}
+              keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle={{ gap: 8 }}
+              horizontal
+              renderItem={({ item }) => {
+                const str = item.link_da_swap;
+                const url = str.replace("futurelove.online", "photo.gachmen.org");
+                // console.log(url);
+                return (
+                  <>
+                    <TouchableOpacity className='w-[107px] h-[152px] rounded' onPress={() => {
+                      setIsOpenDetail(true);
+                      setSrc_img(baby);
+                    }}>
+                      <Image source={{ uri: url }} resizeMode='cover' className='w-full h-full object-cover' />
+                    </TouchableOpacity>
+                  </>
+                )
+              }}
+
+
+            />
+          </View>
+          <TouchableOpacity
+            className="flex-1 bg-red-600 py-2 rounded-lg mt-20 px-4 mx-2"
+            onPress={() => {
+              Alert.alert('Delete Account', 'Are you sure?', [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK', onPress: () => {
+                    setIsOpen(true);
+                  }
+                },
+              ]);
+            }}
+          >
+            <Text className="text-white text-center font-normal text-lg">Delete Account</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="flex-1 bg-black py-2 rounded-lg mt-2 mb-20 px-4 mx-2"
+            onPress={() => {
+              Alert.alert('Sign Out', 'Are you sure?', [
+                {
+                  text: 'Cancel',
+                  style: 'cancel',
+                },
+                { text: 'OK', onPress: handleSignOut },
+
+              ]);
+            }}
+          >
+            <Text className="text-white text-center font-normal text-lg">Sign Out</Text>
+          </TouchableOpacity>
+
+        </ScrollView>
+        <EditForm isOpen={isOpen} handleClose={handleClose} handleUploadFace={handleChangeAvatar} />
+        <DetailProduct isDetail={isOpenDetail} onDetail={() => setIsOpenDetail(false)} img={src_img} />
+
+      </ImageBackground>
+    )
+  }
+
   return (
-    <>
-      <ScrollView className='h-full w-full bg-white pt-4 '>
-        <View className='w-full flex-row items-center mx-4'>
+    <ImageBackground
+      source={images.bgTalet}
+      className="h-full w-full"
+      resizeMode="cover"
+    >
+      <ScrollView className='h-full w-full pt-4 '>
+        <View className='w-11/12 flex-row items-center mx-4 relative'>
           <View className='h-[62px] w-[62px] rounded-full overflow-hidden bg-black'>
             <Image source={{ uri: avatar }} resizeMode='cover' className='w-full h-full object-cover' />
           </View>
           <Text className='ml-4 text-2xl'>{user?.user_name}</Text>
           <TouchableOpacity onPress={() => setIsOpen(true)}>
             <AntDesign name="edit" size={16} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity
+              onPress={()=>{
+                router.navigate('/aboutUs');
+              }}
+              className='flex-row justify-center items-center bg-black px-2 py-1 space-x-1 rounded absolute right-0 top-1/2'
+              onLayout={(e) => setHBtn(e.nativeEvent.layout.height)}
+              style={{ transform: [{ translateY: -hBtn / 2 }] }}
+            >
+            <Text
+            className='text-white text-xl'
+            >About us</Text>
+            <Foundation name="info" size={24} color="white" />
           </TouchableOpacity>
         </View>
         <View className=" mt-8 w-fit h-fit pl-4">
@@ -248,7 +488,7 @@ const profile = () => {
                     setIsOpenDetail(true);
                     setSrc_img(baby);
                   }}>
-                    <Image source={{ uri: url }} resizeMode='cover' className='w-full h-full object-cover'/>
+                    <Image source={{ uri: url }} resizeMode='cover' className='w-full h-full object-cover' />
                   </TouchableOpacity>
                 </>
               )
@@ -259,15 +499,17 @@ const profile = () => {
         </View>
         <TouchableOpacity
           className="flex-1 bg-red-600 py-2 rounded-lg mt-20 px-4 mx-2"
-          onPress={()=>{
+          onPress={() => {
             Alert.alert('Delete Account', 'Are you sure?', [
               {
                 text: 'Cancel',
                 style: 'cancel',
               },
-              {text: 'OK', onPress: ()=>{
-                setIsOpen(true);
-              }},
+              {
+                text: 'OK', onPress: () => {
+                  setIsOpen(true);
+                }
+              },
             ]);
           }}
         >
@@ -275,14 +517,14 @@ const profile = () => {
         </TouchableOpacity>
         <TouchableOpacity
           className="flex-1 bg-black py-2 rounded-lg mt-2 mb-20 px-4 mx-2"
-          onPress={()=>{
+          onPress={() => {
             Alert.alert('Sign Out', 'Are you sure?', [
               {
                 text: 'Cancel',
                 style: 'cancel',
               },
-              {text: 'OK', onPress: handleSignOut},
-              
+              { text: 'OK', onPress: handleSignOut },
+
             ]);
           }}
         >
@@ -291,9 +533,9 @@ const profile = () => {
 
       </ScrollView>
       <EditForm isOpen={isOpen} handleClose={handleClose} handleUploadFace={handleChangeAvatar} />
-      <DetailProduct isDetail={isOpenDetail} onDetail={()=>setIsOpenDetail(false)} img={src_img} />
+      <DetailProduct isDetail={isOpenDetail} onDetail={() => setIsOpenDetail(false)} img={src_img} />
 
-    </>
+    </ImageBackground>
   )
 }
 

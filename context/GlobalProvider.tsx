@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/interface/IUser";
 import { getUser, signin, signup, deleteAccount } from "@/service/auth";
-import signIn from "@/app/(auth)/sign-in";
+import signIn from "@/app/(auth)/signIn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect, router } from "expo-router";
 import { Alert } from "react-native";

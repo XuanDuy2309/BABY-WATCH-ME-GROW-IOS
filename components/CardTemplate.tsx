@@ -9,17 +9,17 @@ const CardTemplate = ({ item, currentTempl }: { item: any, currentTempl: any }) 
     const [isPlaying, setIsPlaying] = useState(false);
     const handleGoToSwap = (item: any) => {
         if (currentTempl.title === "Kid & Mom") {
-            router.push(`/kid&mom/${item.folder_name}`);
+            router.navigate(`/kid&mom/${item.folder_name}`);
             handleShowAds();
             return;
         }
         if (currentTempl.title === "Dad & Mom") {
-            router.push(`/dad&mom/${item.id}`);
+            router.navigate(`/dad&mom/${item.id}`);
             handleShowAds();
 
             return;
         }
-        router.push(`/timemachine/${item.id}`);
+        router.navigate(`/timemachine/${item.id}`);
         handleShowAds();
 
     }

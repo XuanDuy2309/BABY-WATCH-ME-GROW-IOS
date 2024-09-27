@@ -1,23 +1,30 @@
-import { View, Text } from 'react-native'
+import { View, Text, ImageBackground } from 'react-native'
 import React, { useEffect } from 'react'
 import { router, Stack } from 'expo-router'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import  { AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import images from '@/assets/images';
 
 const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-5372862349743986/1123321159';
 
 const _layout = () => {
     
     return (
-        <>
+        <ImageBackground
+            source={images.bgTalet}
+            className="h-full w-full"
+            resizeMode="cover"
+        >
             <Stack>
                 <Stack.Screen
                     name="generator"
                     options={{
                         headerShown: true,
+                        headerStyle: { backgroundColor: "transparent" },
+                        headerTitleStyle: { fontSize: 30, fontWeight: 'bold' },
+                        headerShadowVisible: false,
                         headerTitle: "Generator",
                         headerTitleAlign: "center",
-                        headerTitleStyle: { fontSize: 30, fontWeight: 600 },
                         headerLeft: () => (
                             <AntDesign
                                 name="left"
@@ -32,10 +39,11 @@ const _layout = () => {
                     name="newborn"
                     options={{
                         headerShown: true,
+                        headerStyle: { backgroundColor: "transparent" },
+                        headerTitleStyle: { fontSize: 30, fontWeight: 'bold' },
+                        headerShadowVisible: false,
                         headerTitle: "New Born",
-                        headerTitleAlign: "center",
-                        headerTitleStyle: { fontSize: 30, fontWeight: 600 },
-                        headerLeft: () => (
+                        headerTitleAlign: "center",                        headerLeft: () => (
                             <AntDesign
                                 name="left"
                                 size={24}
@@ -49,9 +57,11 @@ const _layout = () => {
                     name="timemachine/[id]"
                     options={{
                         headerShown: true,
+                        headerStyle: { backgroundColor: "transparent" },
+                        headerTitleStyle: { fontSize: 30, fontWeight: 'bold' },
+                        headerShadowVisible: false,
                         headerTitle: "Time Machine",
                         headerTitleAlign: "center",
-                        headerTitleStyle: { fontSize: 30, fontWeight: 600 },
                         headerLeft: () => (
                             <AntDesign
                                 name="left"
@@ -66,9 +76,11 @@ const _layout = () => {
                     name="dad&mom/[id]"
                     options={{
                         headerShown: true,
+                        headerStyle: { backgroundColor: "transparent" },
+                        headerTitleStyle: { fontSize: 30, fontWeight: 'bold' },
+                        headerShadowVisible: false,
                         headerTitle: "Dad & Mom",
                         headerTitleAlign: "center",
-                        headerTitleStyle: { fontSize: 30, fontWeight: 600 },
                         headerLeft: () => (
                             <AntDesign
                                 name="left"
@@ -83,9 +95,11 @@ const _layout = () => {
                     name="kid&mom/[id]"
                     options={{
                         headerShown: true,
+                        headerStyle: { backgroundColor: "transparent" },
+                        headerTitleStyle: { fontSize: 30, fontWeight: 'bold' },
+                        headerShadowVisible: false,
                         headerTitle: "Kid & Mom",
                         headerTitleAlign: "center",
-                        headerTitleStyle: { fontSize: 30, fontWeight: 600 },
                         headerLeft: () => (
                             <AntDesign
                                 name="left"
@@ -105,7 +119,7 @@ const _layout = () => {
                 }}
             />
 
-        </>
+        </ImageBackground>
     )
 }
 

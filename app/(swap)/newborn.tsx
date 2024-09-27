@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Alert } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { GlobalContext } from '@/context/GlobalProvider';
 import Add from '@/assets/icons/add';
@@ -154,94 +154,100 @@ const NewBorn = () => {
     handleStartDownload(result);
   };
   return (
-    <SafeAreaView className='w-full h-full bg-white'>
-      <ScrollView className='px-5'>
-        <Text>Create a photo of a 0-3 month old baby from a photo of the parents</Text>
-        <View className='flex-row w-full justify-between mt-8'>
-          {
-            img1 ? (
-              <View className='w-[180px] h-[270px]'>
-                <Image source={{ uri: img1 }} className='w-full h-full object-cover' />
-              </View>
-            ) : (
-              <TouchableOpacity className='relative w-[180px] h-[270px]' onPress={() => {
-                setIsOpen(true);
-                setPic('img1');
-              }}>
-                <Image source={images.father} className='w-full h-full object-cover' />
-                <View className='absolute right-0 bottom-0 top-0 left-0 w-full h-full justify-center items-center'>
-                  <Add />
-                </View>
-              </TouchableOpacity>
-            )
-          }
-          {
-            img2 ? (
-              <View className='w-[180px] h-[270px]'>
-                <Image source={{ uri: img2 }} className='w-full h-full object-cover' />
-              </View>
-            ) : (
-              <TouchableOpacity className='relative w-[180px] h-[270px]' onPress={() => { setIsOpen(true); setPic('img2') }}>
-                <Image source={images.mother} className='w-full h-full object-cover' />
-                <View className='absolute right-0 bottom-0 top-0 left-0 w-full h-full justify-center items-center'>
-                  <Add />
-                </View>
-              </TouchableOpacity>
-            )
-          }
-        </View>
-        <ButtonStart onPress={handleSwap} />
-        <View className='mt-8 flex-col justify-start items-end'>
-          <TouchableOpacity onPress={handleDown}>
-            <DownLoad />
-          </TouchableOpacity>
-          <View className='w-full h-[220px] mt-4 bg-[#C3B9B9] overflow-hidden relative' onLayout={(e) => {
-            const width = e.nativeEvent.layout.width;
-            setWid(width);
-          }}
-          >
+    <ImageBackground
+      source={images.bgTalet}
+      resizeMode="cover"
+      className='h-full w-full'
+    >
+      <SafeAreaView className='w-full h-full'>
+        <ScrollView className='px-5'>
+          <Text className='md:w-full md:text-center md:text-xl md:font-normal'>Create a photo of a 0-3 month old baby from a photo of the parents</Text>
+          <View className='flex-row w-full justify-between mt-8'>
             {
-              result.length > 0 ? (
-                <>
-
-                  <Animated.View
-                    className={`w-full h-full flex-row flex-shrink-0 `}
-                    style={animatedStyle}
-                  >
-                    {
-                      result.map((item:any, index) => {
-                        const str = item;
-                        const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
-                        return (
-                          <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { setIsDetail(true) }}>
-                            <Image source={{ uri: url }} className='w-full h-full object-contain' />
-                          </TouchableOpacity>
-                        )
-                      })
-                    }
-                  </Animated.View>
-                  <View className='absolute top-1/2 -translate-x-1/2 flex-row justify-between w-full'>
-                    <TouchableOpacity className='px-4 py-2 bg-[#C3B9B9] rounded' onPress={handlePrev}>
-                      <Text className='text-white text-xl'>{"<"}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity className='px-4 py-2 bg-[#C3B9B9] rounded' onPress={handleNext}>
-                      <Text className='text-white text-xl'>{">"}</Text>
-                    </TouchableOpacity>
-
-                  </View>
-                </>
-              ) : (
-                <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                  <Loader isLoading={loading} />
+              img1 ? (
+                <View className='w-[180px] h-[270px] md:w-[220px] md:h-[276px]'>
+                  <Image source={{ uri: img1 }} className='w-full h-full object-cover' />
                 </View>
+              ) : (
+                <TouchableOpacity className='relative w-[180px] h-[270px] md:w-[220px] md:h-[276px]' onPress={() => {
+                  setIsOpen(true);
+                  setPic('img1');
+                }}>
+                  <Image source={images.father} className='w-full h-full object-cover' />
+                  <View className='absolute right-0 bottom-0 top-0 left-0 w-full h-full justify-center items-center'>
+                    <Add />
+                  </View>
+                </TouchableOpacity>
+              )
+            }
+            {
+              img2 ? (
+                <View className='w-[180px] h-[270px] md:w-[220px] md:h-[276px]'>
+                  <Image source={{ uri: img2 }} className='w-full h-full object-cover' />
+                </View>
+              ) : (
+                <TouchableOpacity className='relative w-[180px] h-[270px] md:w-[220px] md:h-[276px]' onPress={() => { setIsOpen(true); setPic('img2') }}>
+                  <Image source={images.mother} className='w-full h-full object-cover' />
+                  <View className='absolute right-0 bottom-0 top-0 left-0 w-full h-full justify-center items-center'>
+                    <Add />
+                  </View>
+                </TouchableOpacity>
               )
             }
           </View>
-        </View>
-      </ScrollView>
-      <HisUpload isOpen={isOpen} handleClose={() => setIsOpen(false)} handleUploadFace={handleUploadFace} />
-      <DetailProduct onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} />
-    </SafeAreaView>
+          <ButtonStart onPress={handleSwap} />
+          <View className='mt-8 flex-col justify-start items-end'>
+            <TouchableOpacity onPress={handleDown}>
+              <DownLoad width={44} height={44} />
+            </TouchableOpacity>
+            <View className='w-full h-[220px] md:h-[440px] rounded mt-4 bg-[#C3B9B9] overflow-hidden relative' onLayout={(e) => {
+              const width = e.nativeEvent.layout.width;
+              setWid(width);
+            }}
+            >
+              {
+                result.length > 0 ? (
+                  <>
+
+                    <Animated.View
+                      className={`w-full h-full flex-row flex-shrink-0 `}
+                      style={animatedStyle}
+                    >
+                      {
+                        result.map((item: any, index) => {
+                          const str = item;
+                          const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
+                          return (
+                            <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { setIsDetail(true) }}>
+                              <Image source={{ uri: url }} className='w-full h-full object-contain' />
+                            </TouchableOpacity>
+                          )
+                        })
+                      }
+                    </Animated.View>
+                    <View className='absolute top-1/2 -translate-x-1/2 flex-row justify-between w-full'>
+                      <TouchableOpacity className='px-4 py-2 bg-[#C3B9B9] rounded' onPress={handlePrev}>
+                        <Text className='text-white text-xl'>{"<"}</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity className='px-4 py-2 bg-[#C3B9B9] rounded' onPress={handleNext}>
+                        <Text className='text-white text-xl'>{">"}</Text>
+                      </TouchableOpacity>
+
+                    </View>
+                  </>
+                ) : (
+                  <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
+                    <Loader isLoading={loading} />
+                  </View>
+                )
+              }
+            </View>
+          </View>
+        </ScrollView>
+        <HisUpload isOpen={isOpen} handleClose={() => setIsOpen(false)} handleUploadFace={handleUploadFace} />
+        <DetailProduct onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} />
+      </SafeAreaView>
+    </ImageBackground>
   )
 }
 

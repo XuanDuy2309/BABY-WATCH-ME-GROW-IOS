@@ -5,6 +5,13 @@ const images = {
     intro3: require('./intro3.png'),
     intro4: require('./intro4.png'),
     intro5: require('./intro5.png'),
+
+    introTablet1: require('./intro_tablet1.png'),
+    introTablet2: require('./intro_tablet2.png'),
+    introTablet3: require('./intro_tablet3.png'),
+    introTablet4: require('./intro_tablet4.png'),
+    introTablet5: require('./intro_tablet5.png'),
+
     cardItem1: require('./cardItem1.png'),
     cardItem2: require('./cardItem2.png'),
     cardItem3: require('./cardItem3.png'),
@@ -15,9 +22,20 @@ const images = {
     mother: require('./mother.png'),
     baby: require('./baby.png'),
 
+    dad: require('./dad.png'),
+    mom: require('./mom.png'),
+    bbGen1: require('./bbGen1.png'),
+    bbGen2: require('./bbGen2.png'),
+    timeAbout: require('./timeAbout.png'),
+    newbornAbout: require('./newbornAbout.png'),
+    familyAbout1: require('./familyAbout1.png'),
+    familyAbout2: require('./familyAbout2.png'),
+    vidAbout: require('./vidAbout.png'),
+
     bgPayment: require('./bg_payment.png'),
     bgPayment2: require('./bg_pay2.png'),
-
+    bgTalet: require('./bg_talet.png'),
+    
     dadPayment: require('./dad_payment.png'),
     momPayment: require('./mom_payment.png'),
 

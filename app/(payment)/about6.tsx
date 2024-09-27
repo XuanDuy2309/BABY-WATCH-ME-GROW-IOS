@@ -10,7 +10,7 @@ import { GlobalContext } from '@/context/GlobalProvider';
 
 const itemSkus = ['BABYWATCHMEGROWIOS.3usd', ''];
 
-const about1 = () => {
+const about6 = () => {
     const {handleSetCount} = useContext(GlobalContext);
     const [w, setW] = useState(0);
     const [h, setH] = useState(0);
@@ -25,6 +25,7 @@ const about1 = () => {
           await initConnection();
           const availableProducts = await getProducts({skus: itemSkus});
           setProducts(availableProducts);
+          console.log(availableProducts);
         } catch (err:any) {
           console.warn(err.code, err.message);
         }
@@ -47,7 +48,7 @@ const about1 = () => {
         });
 
         handleSetCount(10);
-        router.push('/(home)');
+        router.navigate('/(home)');
       } catch (err:any) {
         console.warn(err.code, err.message);
       }
@@ -118,7 +119,7 @@ const about1 = () => {
                             Continue
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity className='absolute bottom-10 right-10' onPress={()=>router.push('/(home)')}>
+                    <TouchableOpacity className='absolute bottom-10 right-10' onPress={()=>router.navigate('/(home)')}>
                         <Text className='text-white font-bold text-base underline'>
                             Skip
                         </Text>
@@ -129,4 +130,4 @@ const about1 = () => {
     );
 };
 
-export default about1;
+export default about6;

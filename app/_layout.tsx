@@ -10,10 +10,11 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { View, Text } from "react-native";
+import { View, Text, ImageBackground } from "react-native";
 import GlobalProvider from "@/context/GlobalProvider";
 import { StatusBar } from "expo-status-bar";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import images from "@/assets/images";
 
 
 // Prevent the splash screen from auto-hiding before asset loading is cromplete.
@@ -37,28 +38,40 @@ export default function RootLayout() {
 
   return (
     <GlobalProvider>
-      <Stack>
-        <Stack.Screen name="(home)" options={{ headerShown: false }} />
-        <Stack.Screen name="(payment)" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(swap)" options={{ headerShown: false }} />
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="template/[title]" options={{
-          headerShown: true,
-          headerTitle: "All Templates",
-          headerTitleStyle: { fontSize: 30, fontWeight: 600 },
-          headerTitleAlign: "center",
-          headerLeft: () => (
-            <AntDesign
-              name="left"
-              size={24}
-              color="black"
-              onPress={() => router.back()}
-            />)
+      <ImageBackground
+        source={images.bgTalet}
+        className="h-full w-full"
+        resizeMode="cover"
+      >
+        <Stack>
+          <Stack.Screen name="(home)" options={{ headerShown: false }} />
+          <Stack.Screen name="(payment)" options={{ headerShown: false }} />  
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(swap)" options={{ headerShown: false }} />
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="template/[title]" options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTitle: "All Templates",
+            headerShadowVisible: false,
 
-        }} />
-        <Stack.Screen name="+not-found" options={{ headerShown: false }} />
-      </Stack>
+            headerTitleStyle: {
+              fontSize: 30,
+              fontWeight: 'bold', // Use 'bold' instead of a numeric value like 600
+            },
+            headerTitleAlign: "center",
+            headerLeft: () => (
+              <AntDesign
+                name="left"
+                size={24}
+                color="black"
+                onPress={() => router.back()}
+              />)
+
+          }} />
+          <Stack.Screen name="+not-found" options={{ headerShown: false }} />
+        </Stack>
+      </ImageBackground>
       <StatusBar backgroundColor="#161622" style="dark" />
     </GlobalProvider>
   );

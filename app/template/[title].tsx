@@ -6,6 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     ScrollView,
+    Dimensions,
+    ImageBackground,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,6 +27,9 @@ const listTempl = [
     { id: "1", title: "Dad & Mom", url: "all_video_baby_mom" },
     { id: "2", title: "Kid & Mom", url: "mom_baby_temp" },
 ];
+
+const { width } = Dimensions.get('screen');
+
 
 const Template = () => {
     const { handleShowAds } = useContext(GlobalContext);
@@ -82,62 +87,133 @@ const Template = () => {
         return () => { };
     }, [currentPage, currentTempl]);
 
+    if (width >= 768) {
+        return (
+            <ImageBackground
+                source={images.bgTalet}
+                className="h-full w-full"
+                resizeMode="cover"
+            >
+                <SafeAreaView className="h-full w-full px-2">
+                    <FlatList
+                        className="mt-4 w-full pb-4 h-[60px]"
+                        horizontal
+                        data={listTempl}
+                        keyExtractor={(item) => item.id}
+                        contentContainerStyle={{
+                            gap: 8,
+                            justifyContent: "space-around",
+                        }}
+                        renderItem={({ item }) => {
+                            if (currentTempl && item.title === currentTempl.title) {
+                                return (
+                                    <TouchableOpacity
+                                        className="w-[134px] h-[36px] flex justify-center items-center bg-[#FF7991] rounded-3xl"
+                                        onPress={() => {
+                                            setCurrentTempl(item);
+                                        }}
+                                    >
+                                        <Text className="text-white">{item.title}</Text>
+                                    </TouchableOpacity>
+                                );
+                            }
+                            return (
+                                <TouchableOpacity
+                                    className="w-[134px] h-[36px] flex justify-center items-center bg-[#D9D9D9] rounded-3xl"
+                                    onPress={() => {
+                                        setCurrentTempl(item);
+                                    }}
+                                >
+                                    <Text>{item.title}</Text>
+                                </TouchableOpacity>
+                            );
+                        }}
+                    />
+                    <FlatList
+                        className="w-full h-full mx-auto mt-2"
+                        data={data}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={3}
+                        contentContainerStyle={{ gap: 8 }}
+                        columnWrapperStyle={{ gap: 8 }}
+                        renderItem={({ item }) => {
+                            return (
+                                <CardTemplate
+                                    item={item}
+                                    currentTempl={currentTempl}
+                                />
+                            );
+                        }}
+                    />
+                    <Pagination totalPage={totalPages} onChangePage={(e) => handleChangePage(e)} />
+
+                    <Loader isLoading={loading} />
+                </SafeAreaView>
+            </ImageBackground>
+        )
+    }
+
     return (
-        <SafeAreaView className="h-full w-full bg-white px-2">
-            <FlatList
-                className="mt-4 w-full pb-4"
-                horizontal
-                data={listTempl}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={{
-                    gap: 8,
-                    justifyContent: "space-around",
-                }}
-                renderItem={({ item }) => {
-                    if (currentTempl&&item.title === currentTempl.title) {
+        <ImageBackground
+            source={images.bgTalet}
+            className="h-full w-full"
+            resizeMode="cover"
+        >
+            <SafeAreaView className="h-full w-full px-2">
+                <FlatList
+                    className="mt-4 w-full h-[60px] pb-4 "
+                    horizontal
+                    data={listTempl}
+                    keyExtractor={(item) => item.id}
+                    contentContainerStyle={{
+                        gap: 8,
+                    }}
+                    renderItem={({ item }) => {
+                        if (currentTempl && item.title === currentTempl.title) {
+                            return (
+                                <TouchableOpacity
+                                    className="w-[134px] flex justify-center items-center bg-[#FF7991] rounded-3xl"
+                                    onPress={() => {
+                                        setCurrentTempl(item);
+                                    }}
+                                >
+                                    <Text className="text-white">{item.title}</Text>
+                                </TouchableOpacity>
+                            );
+                        }
                         return (
                             <TouchableOpacity
-                                className="w-[134px] h-[36px] flex justify-center items-center bg-[#FF7991] rounded-3xl"
+                                className="w-[134px] py-2 bg-[#D9D9D9] rounded-3xl"
                                 onPress={() => {
                                     setCurrentTempl(item);
                                 }}
                             >
-                                <Text className="text-white">{item.title}</Text>
+                                <Text className="text-center">{item.title}</Text>
                             </TouchableOpacity>
                         );
-                    }
-                    return (
-                        <TouchableOpacity
-                            className="w-[134px] h-[36px] flex justify-center items-center bg-[#D9D9D9] rounded-3xl"
-                            onPress={() => {
-                                setCurrentTempl(item);
-                            }}
-                        >
-                            <Text>{item.title}</Text>
-                        </TouchableOpacity>
-                    );
-                }}
-            />
-            <FlatList
-                className="w-full h-full mx-auto"
-                data={data}
-                keyExtractor={(item, index) => index.toString()}
-                numColumns={2}
-                contentContainerStyle={{ gap: 8 }}
-                columnWrapperStyle={{ gap: 8 }}
-                renderItem={({ item }) => {
-                    return (
-                        <CardTemplate
-                            item={item}
-                            currentTempl={currentTempl}
-                        />
-                    );
-                }}
-            />
-            <Pagination totalPage={totalPages} onChangePage={(e) => handleChangePage(e)} />
+                    }}
+                />
+                <FlatList
+                    className="w-full h-full mx-auto mt-2"
+                    data={data}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={2}
+                    contentContainerStyle={{ gap: 8 }}
+                    columnWrapperStyle={{ gap: 8 }}
+                    renderItem={({ item }) => {
+                        return (
+                            <CardTemplate
+                                item={item}
+                                currentTempl={currentTempl}
+                            />
+                        );
+                    }}
+                />
+                <Pagination totalPage={totalPages} onChangePage={(e) => handleChangePage(e)} />
 
-            <Loader isLoading={loading} />
-        </SafeAreaView>
+                <Loader isLoading={loading} />
+            </SafeAreaView>
+        </ImageBackground>
     );
 };
 

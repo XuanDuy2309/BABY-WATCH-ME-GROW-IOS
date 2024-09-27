@@ -11,7 +11,7 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        // router.push('/about1');
+        // router.navigate('/about1');
         if(!user){
           Alert.alert("Opp...!","Log in or register to explore unique features.",[
             {
@@ -19,27 +19,27 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
               // onPress: () => console.log("Cancel Pressed"),
               style: "cancel",
             },
-            { text: "OK", onPress: () => router.push("/sign-in") },
+            { text: "OK", onPress: () => router.navigate("/signIn") },
           ]);
           return;
         }
         if (title != "Generator" && title != "Profile"&&title != "New Born") {
-          router.push(`/template/${title}`);
+          router.navigate(`/template/${title}`);
           handleShowAds();
           return;
         } 
         if (title === "Generator"){
-          router.push('/generator');
+          router.navigate('/generator');
           handleShowAds();
           return;
         }
         if (title === "New Born"){
-          router.push('/newborn');
+          router.navigate('/newborn');
           handleShowAds();
           return;
         }
         if (title === "Profile"){
-          router.push('/profile');
+          router.navigate('/profile');
           handleShowAds();
           return;
         }

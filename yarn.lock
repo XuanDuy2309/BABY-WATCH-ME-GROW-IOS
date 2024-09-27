@@ -4385,11 +4385,6 @@ expo-constants@*, expo-constants@~16.0.0, expo-constants@~16.0.2:
     "@expo/config" "~9.0.0"
     "@expo/env" "~0.3.0"
 
-expo-document-picker@~12.0.2:
-  version "12.0.2"
-  resolved "https://registry.npmjs.org/expo-document-picker/-/expo-document-picker-12.0.2.tgz"
-  integrity sha512-tmwuRWoCPv6SmNDSMEWcttMBJ95k8/g5sMWnHdmvOx0UKp0pFXP8FI+55HKtQpo6k2+118MkdDDhQSwKqASVAw==
-
 expo-file-system@~17.0.1:
   version "17.0.1"
   resolved "https://registry.npmjs.org/expo-file-system/-/expo-file-system-17.0.1.tgz"
@@ -4489,6 +4484,11 @@ expo-system-ui@~3.0.7:
   dependencies:
     "@react-native/normalize-colors" "0.74.85"
     debug "^4.3.2"
+
+expo-tracking-transparency@~4.0.2:
+  version "4.0.2"
+  resolved "https://registry.npmjs.org/expo-tracking-transparency/-/expo-tracking-transparency-4.0.2.tgz"
+  integrity sha512-ZQzdR9D6LHr60QEwwJq2OLl0bwzgqt+O2C/OqSchFR1IekL4syf53f9QmjHK8oRIkLzEGxKIirTrKcE0j9Ko6A==
 
 expo-web-browser@~13.0.3:
   version "13.0.3"
