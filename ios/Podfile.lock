@@ -1442,7 +1442,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.6.0):
+  - RNSVG (15.7.1):
     - React-Core
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
@@ -1803,7 +1803,7 @@ SPEC CHECKSUMS:
   RNIap: 2a3674383dcf383e5b7b3c4680dc87f1b2657326
   RNReanimated: 35f9ac9c3ac42d0497ebd1cce5c39d7687a8493e
   RNScreens: b32a9ff15bea7fcdbe5dff6477bc503f792b1208
-  RNSVG: 5da7a24f31968ec74f0b091e3440080f347e279b
+  RNSVG: 4590aa95758149fa27c5c83e54a6a466349a1688
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 88480008ccacea6301ff7bf58726e27a72931c8d
 

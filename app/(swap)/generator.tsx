@@ -123,7 +123,7 @@ const Generator = () => {
             <SafeAreaView className='w-full h-full'>
                 <ScrollView className='px-5'>
                     <Text>Create photos of 7-15 year old children from parents photos</Text>
-                    <View className='flex-row w-full justify-between mt-8'>
+                    <View className='flex-row w-full justify-center space-x-5 md:space-x-8 mt-8'>
                         {
                             img1 ? (
                                 <View className='w-[180px] h-[270px] md:w-[220px] md:h-[276px]'>

@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.1.5</string>
+	<string>2.1.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -33,7 +33,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.1.5</string>
+	<string>2.1.7</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5372862349743986~3844057102</string>
 	<key>LSApplicationCategoryType</key>
@@ -53,20 +53,20 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-    <key>NSCameraUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your camera for AI gen baby image or videos</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your microphone</string>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your camera for AI gen baby image or videos</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>The app accesses your photos to let you share them with your friends.</string>
-    <key>NSUserActivityTypes</key>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to access your camera for AI gen baby image or videos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow $(PRODUCT_NAME) to access your camera for AI gen baby image or videos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The app accesses your photos to let you share them with your friends.</string>
+	<key>NSUserActivityTypes</key>
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
 	</array>
 	<key>NSUserTrackingUsageDescription</key>
-    <string>This identifier will be used to deliver personalized ads to you.</string>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

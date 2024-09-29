@@ -163,7 +163,7 @@ const NewBorn = () => {
       <SafeAreaView className='w-full h-full'>
         <ScrollView className='px-5'>
           <Text className='md:w-full md:text-center md:text-xl md:font-normal'>Create a photo of a 0-3 month old baby from a photo of the parents</Text>
-          <View className='flex-row w-full justify-between mt-8'>
+          <View className='flex-row w-full justify-center space-x-5 md:space-x-8 mt-8'>
             {
               img1 ? (
                 <View className='w-[180px] h-[270px] md:w-[220px] md:h-[276px]'>
