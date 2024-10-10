@@ -3,11 +3,12 @@ import React, { useContext, useEffect, useState } from "react";
 import images from "@/assets/images";
 import { Link, router } from "expo-router";
 import { GlobalContext } from "@/context/GlobalProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CardItem = ({ img, title }: { img: any; title: string }) => {
   const {user,handleShowAds} = useContext(GlobalContext);
 
-
+  const storage = AsyncStorage.getItem("user");
   return (
     <TouchableOpacity
       onPress={() => {
@@ -23,24 +24,27 @@ const CardItem = ({ img, title }: { img: any; title: string }) => {
           ]);
           return;
         }
+        // if (!user){
+        //   storage.then((data) => handleSetUser(data ? JSON.parse(data) : null));
+        // }
         if (title != "Generator" && title != "Profile"&&title != "New Born") {
           router.navigate(`/template/${title}`);
-          //handleShowAds();
+          handleShowAds();
           return;
         } 
         if (title === "Generator"){
+          handleShowAds();
           router.navigate('/generator');
-          //handleShowAds();
           return;
         }
         if (title === "New Born"){
           router.navigate('/newborn');
-          //handleShowAds();
+          handleShowAds();
           return;
         }
         if (title === "Profile"){
           router.navigate('/profile');
-          //handleShowAds();
+          handleShowAds();
           return;
         }
 

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IUser } from "@/interface/IUser";
-import { getUser, signin, signup, deleteAccount } from "@/service/auth";
+import { getUser, signin, signup, deleteAccount, getCoinInApp, postCoinInApp } from "@/service/auth";
 import signIn from "@/app/(auth)/signIn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect, router } from "expo-router";
@@ -17,10 +17,12 @@ const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
 interface GlobalContextType {
   handleSignIn: (formData: any) => void;
   handleSignUp: (formData: any, checkTerms: boolean) => void;
-  handleSignOut: (formData: any) => void;
+  handleSignOut: () => void;
   handleDeleteAccount: (formData: any) => void;
   handleShowAds: () => void;
-  handleSetCount: (num:number) => void;
+  handleSetCount: (num: number) => void;
+  // handleSetUser: (user: IUser) => void;
+  handleUpdateCoin: (user: IUser, number: number) => void;
   user: IUser;
   count: number;
   isLoading: boolean;
@@ -33,6 +35,8 @@ export const GlobalContext = createContext<GlobalContextType>({
   handleDeleteAccount: () => { },
   handleShowAds: () => { },
   handleSetCount: () => { },
+  // handleSetUser: () => { },
+  handleUpdateCoin: () => { },
   user: {
     device_register: "",
     email: "",
@@ -41,6 +45,7 @@ export const GlobalContext = createContext<GlobalContextType>({
     link_avatar: "",
     token: "",
     user_name: "",
+    time_coin: 0,
   },
   count: 0,
   isLoading: false,
@@ -51,7 +56,7 @@ const GlobalProvider = ({ children }: { children: any }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<IUser | any>();
   const [loadAds, setLoadAds] = useState(false);
-  const [count,setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const handleSignIn = async (data: {
     email_or_username: "";
@@ -69,9 +74,9 @@ const GlobalProvider = ({ children }: { children: any }) => {
         const result = await signin(formData);
         // console.log(result.data.messages);
         if (result.data.message === "Success Login Account") {
-          console.log(result.data);
+          // console.log(result.data);
           setUser(result.data);
-          setIsLoading(false);
+          // setIsLoading(false);
           await AsyncStorage.setItem("user", JSON.stringify(result.data));
           router.navigate('/(home)');
           Alert.alert("Message", result.data.message);
@@ -158,39 +163,60 @@ const GlobalProvider = ({ children }: { children: any }) => {
     setUser(null);
     AsyncStorage.removeItem("user");
     router.navigate('/(home)');
-    
+
   }
 
   const handleShowAds = () => {
-    interstitial.show();
+    if (loadAds) {
+      interstitial.show();
+    }
   }
 
-  // useEffect(() => {
-  //   const unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-  //     setLoadAds(true);
-  //   });
+  useEffect(() => {
 
-  //   const unsubscribe2 = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-  //     setLoadAds(false);
-  //     interstitial.load();
+    AsyncStorage.getItem("user").then((data) => {
+      if (data) {
+        setUser(JSON.parse(data));
+      }
+    });
 
-  //   })
+    const unsubscribe = interstitial.addAdEventListener(AdEventType.LOADED, () => {
+      setLoadAds(true);
+    });
 
-  //   interstitial.load();
+    const unsubscribe2 = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
+      setLoadAds(false);
+      interstitial.load();
 
-  //   // Unsubscribe from events on unmount
-  //   return () => {
-  //     unsubscribe();
-  //     unsubscribe2();
-  //   };
-  // }, []);
+    })
 
-  // if (!loadAds) {
-  //   return null;
-  // }
-  const handleSetCount = (num:number) => {
+    interstitial.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      unsubscribe();
+      unsubscribe2();
+    };
+  }, []);
+
+  const handleSetCount = (num: number) => {
     setCount(num);
   }
+
+  // const handleSetUser = (user: IUser) => {
+  //   setUser(user);
+  // }
+
+  const handleUpdateCoin = async (user: IUser, number: number) => {
+    try{
+        const formData = new FormData();
+        formData.append("coin_number", number?.toString());
+        formData.append("user_id", user.id_user.toString());
+        const {data} = await postCoinInApp(formData, user);
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 
 
@@ -203,6 +229,8 @@ const GlobalProvider = ({ children }: { children: any }) => {
         handleDeleteAccount,
         handleShowAds,
         handleSetCount,
+        // handleSetUser,
+        handleUpdateCoin,
         count,
         isLoading,
         user,

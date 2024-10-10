@@ -51,6 +51,8 @@ PODS:
     - Yoga
   - ExpoSharing (12.0.1):
     - ExpoModulesCore
+  - ExpoStoreReview (7.0.2):
+    - ExpoModulesCore
   - ExpoSystemUI (3.0.7):
     - ExpoModulesCore
   - ExpoTrackingTransparency (4.0.2):
@@ -1463,6 +1465,7 @@ DEPENDENCIES:
   - ExpoMediaLibrary (from `../node_modules/expo-media-library/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoSharing (from `../node_modules/expo-sharing/ios`)
+  - ExpoStoreReview (from `../node_modules/expo-store-review/ios`)
   - ExpoSystemUI (from `../node_modules/expo-system-ui/ios`)
   - ExpoTrackingTransparency (from `../node_modules/expo-tracking-transparency/ios`)
   - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
@@ -1581,6 +1584,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-modules-core"
   ExpoSharing:
     :path: "../node_modules/expo-sharing/ios"
+  ExpoStoreReview:
+    :path: "../node_modules/expo-store-review/ios"
   ExpoSystemUI:
     :path: "../node_modules/expo-system-ui/ios"
   ExpoTrackingTransparency:
@@ -1729,6 +1734,7 @@ SPEC CHECKSUMS:
   ExpoMediaLibrary: 250bf2659264163e428da5f867493b4cccd35ef9
   ExpoModulesCore: 5440e96a8ee014f4fd88e77264985fd0a65f5f8c
   ExpoSharing: 8db05dd85081219f75989a3db2c92fe5e9741033
+  ExpoStoreReview: 15f9a636b62ff00bb21cbe9a9fe22f0239da4481
   ExpoSystemUI: d4f065a016cae6721b324eb659cdee4d4cf0cb26
   ExpoTrackingTransparency: 005340638bbd48449066a6c1a54ee44ae65ed7b4
   ExpoWebBrowser: 7595ccac6938eb65b076385fd23d035db9ecdc8e

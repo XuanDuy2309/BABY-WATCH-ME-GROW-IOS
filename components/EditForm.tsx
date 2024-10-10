@@ -14,7 +14,7 @@ import { changePassword, deleteAccount } from '@/service/auth';
 
 
 const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, handleClose: () => void, handleUploadFace: (img: any) => void }) => {
-    const { user, handleDeleteAccount } = useContext(GlobalContext);
+    const { user, handleDeleteAccount, handleSignOut } = useContext(GlobalContext);
     const [data, setData] = useState([]);
     const [action, setAction] = useState('upload');
     const [loading, setLoading] = useState(false);
@@ -183,6 +183,19 @@ const EditForm = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean, 
                         }}
                     >
                         <Text className='text-lg text-white font-bold'>{"Delete Account"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity className='w-full justify-center items-center mt-4 p-4 bg-[#FF7991] rounded-xl'
+                        onPress={() => {
+                            Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel"
+                                },
+                                { text: "OK", onPress: () => handleSignOut() }
+                            ])
+                        }}
+                    >
+                        <Text className='text-lg text-white font-bold'>{"Sign Out"}</Text>
                     </TouchableOpacity>
 
                 </View>

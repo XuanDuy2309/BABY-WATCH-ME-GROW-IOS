@@ -67,13 +67,13 @@ const _layout = () => {
         />
       </Stack>
       <StatusBar style="dark" />
-      {/* <BannerAd
+      <BannerAd
         unitId={adUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
         requestOptions={{
           requestNonPersonalizedAdsOnly: true,
         }}
-      /> */}
+      />
     </ImageBackground>
   );
 }

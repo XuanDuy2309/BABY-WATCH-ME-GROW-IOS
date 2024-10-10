@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground, Dimensions } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { GlobalContext } from '@/context/GlobalProvider';
 import Add from '@/assets/icons/add';
@@ -12,10 +12,12 @@ import { handleDadAndMom, handleNewBorn } from '@/service/image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { withTiming, Easing, useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { ResizeMode, Video } from 'expo-av';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import ProgressCircle from '@/components/ProgressCircle';
+
+const { width } = Dimensions.get('screen');
 
 const DadAndMom = () => {
   const { id } = useLocalSearchParams();
@@ -29,9 +31,8 @@ const DadAndMom = () => {
   const [result, setResult] = useState('');
   const [srcDetail, setSrcDetail] = useState('');
   const [positions, setPositions] = useState(0);
-  const [wid, setWid] = useState(0);
+  const [idSaved, setIdSaved] = useState(0);
   const { user } = useContext(GlobalContext);
-
 
 
   const handleNext = () => {
@@ -88,11 +89,12 @@ const DadAndMom = () => {
     // console.log(randomLink);
     setLoading(true);
     try {
-      const res = await handleDadAndMom(user, randomLink, id);
-      const str = res.data.sukien_video.link_vid_da_swap
+      const {data} = await handleDadAndMom(user, randomLink, id);
+      const str = data.sukien_video.link_vid_da_swap
       const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
       setResult((prev) => prev = url);
-      // console.log(res.data);
+      setIdSaved(data.sukien_video.id_saved);
+      console.log(data);
 
       setLoading(false);
     } catch (err) {
@@ -189,13 +191,26 @@ const DadAndMom = () => {
           </View>
           <ButtonStart onPress={handleSwap} />
           <View className='mt-8 flex-col justify-start items-end'>
-            <TouchableOpacity onPress={handleDown}>
-              <DownLoad width={44} height={44}/>
-            </TouchableOpacity>
-            <View className='w-full h-[220px] md:h-[440px] rounded mt-4 bg-[#C3B9B9] overflow-hidden relative' onLayout={(e) => {
-              const width = e.nativeEvent.layout.width;
-              setWid(width);
-            }} >
+          <View 
+              className='flex-row w-full justify-between items-center'
+            >
+              <TouchableOpacity
+                className='mr-3 bg-[#FF7991] py-2 px-3 rounded'
+                onPress={() => {
+                  router.navigate('/detail/timemachine');
+                  router.setParams({ id_sukien: idSaved });
+                }}
+              >
+                <Text className='text-white md:text-lg'>Click to see your video!</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleDown}>
+
+                <DownLoad width={44} height={44} />
+              </TouchableOpacity>
+            </View>
+            <View 
+            className='w-full h-[220px] md:h-[440px] rounded mt-4 bg-[#C3B9B9] overflow-hidden relative' 
+            >
               {
                 result !== '' ? (
                   <>
@@ -211,7 +226,7 @@ const DadAndMom = () => {
                   </>
                 ) : (
                   <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                    <ProgressCircle loading={loading} />
+                    <ProgressCircle loading={loading} width={width>=768? 768*0.9 : width*0.9}/>
                   </View>
                 )
               }

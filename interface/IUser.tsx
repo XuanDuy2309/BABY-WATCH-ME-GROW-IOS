@@ -6,4 +6,5 @@ export interface IUser {
   link_avatar: string;
   token: string;
   user_name: string;
+  time_coin: number;
 }

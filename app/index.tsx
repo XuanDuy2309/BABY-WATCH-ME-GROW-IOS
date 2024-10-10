@@ -1,55 +1,57 @@
-import { Dimensions, Text, View, Image } from "react-native";
+import { Dimensions, Text, View, Image, TouchableOpacity } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import images from "@/assets/images";
-import Item from "./item";
+// import Item from "./item";
+import { GlobalContext } from "@/context/GlobalProvider";
+import { Redirect, router } from "expo-router";
+import { ResizeMode, Video } from "expo-av";
+import videos from "@/assets/videos";
 // import { Analytics, PageHit } from 'react-native-googleanalytics';
 
 // const analytics = new Analytics('UA-XXXXXX-Y');
 // analytics.hit(new PageHit('Home'));
 
+const { width } = Dimensions.get('screen');
+
 
 const index = () => {
-  const width = Dimensions.get("window").width;
-  const heigth = Dimensions.get("window").height;
+  const [w,setW] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { user } = useContext(GlobalContext);
 
   const data = ["item1", "item2", "item3", "item4", "item5"]
+
+  if (user) {
+    return <Redirect href="/(home)" />
+  }
 
 
   return (
     <>
-      <View className="relative h-full w-full">
-        <Carousel
-          loop={false}
-          width={width}
-          height={heigth}
-          autoPlay={false}
-          data={data}
-          scrollAnimationDuration={1000}
-          onSnapToItem={(index) => {
-            setCurrentIndex(index);
-          }}
-          renderItem={({ item }) => { return (<Item title={item} />) }}
+      <View className="flex-1 relative">
+        <Video 
+          source={width >= 768 ? videos.startAppTablet : videos.startAppMobile}
+          shouldPlay
+          className="w-full h-full"
+          resizeMode={ResizeMode.COVER}
+          isLooping
         />
-        <View
-          className={`flex-row justify-center py-2 absolute bottom-0 w-full`}
+        <TouchableOpacity
+          className="absolute bottom-10 left-1/2 bg-[#FF7991] px-4 h-[42px] overflow-hidden rounded justify-center items-center"
+          style={{ transform: [{ translateX: -w/2 }] }}
+          onLayout={(e) => {
+            setW(e.nativeEvent.layout.width);
+          }}
+          onPress={() => {
+            router.replace("/about1")
+          }}
         >
-          {data.map((item, index) => {
-            return (
-              <View
-                key={index}
-                className={`w-2.5 h-2.5 rounded-full  mx-2 ${index === currentIndex ? "bg-black" : "bg-[#D9D9D9] border"
-                  }`}
-              />
-            );
-          })}
-        </View>
+          <Text className="font-bold text-lg text-white">Get Started</Text>
+        </TouchableOpacity>
       </View>
-
-
     </>
   );
 };

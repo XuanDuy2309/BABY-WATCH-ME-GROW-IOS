@@ -20,21 +20,21 @@ const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean,
         const result: any = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [3, 4],
             quality: 1,
           });
 
         if (!result.canceled) {
             setLoading(true);
-            // console.log(result.assets[0].uri);
+            console.log(result.assets[0].type);
             const formData = new FormData();
 
             formData.append('src_img', {
                 uri: result.assets[0].uri,
-                type: result.assets[0].type,
+                type: result.assets[0].mediaTypes || result.assets[0].type,
                 name: 'image.jpg',
             } as any);
-            // console.log("formData", formData);
+            console.log("formData", formData);
             try {
                 const result = await uploadImage(formData, user);
                 if(result.data.message) {
@@ -98,7 +98,7 @@ const HisUpload = ({ isOpen, handleClose, handleUploadFace }: { isOpen: boolean,
                                         onPress={() => {
                                             handleUploadFace(item);
                                             handleClose();
-                                            // console.log(item);
+                                            console.log(item);  
                                         }}>
                                         <Image source={{ uri: item }} className='w-full h-full object-cover' />
                                     </TouchableOpacity>

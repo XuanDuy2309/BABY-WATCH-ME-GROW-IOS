@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button, Alert, Platform, ImageBackground } from 'react-native'
+import { View, Text, TextInput, Image, ScrollView, TouchableOpacity, Button, Alert, Platform, ImageBackground, Dimensions } from 'react-native'
 import React, { useState, useContext } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import images from '@/assets/images';
@@ -13,6 +13,9 @@ import DetailImg from '@/components/DetailImg';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import ProgressCircle from '@/components/ProgressCircle';
+import { router } from 'expo-router';
+
+const {width} = Dimensions.get('screen');
 
 
 const Generator = () => {
@@ -23,8 +26,9 @@ const Generator = () => {
     const [img1, setImg1] = useState('');
     const [img2, setImg2] = useState('');
     const [srcSwap, setSrcSwap] = useState({ img1: '', img2: '' });
-    const [result, setResult] = useState('');
+    const [result, setResult] = useState<any>();
     const { user } = useContext(GlobalContext);
+    const [idSaved, setIdSaved] = useState();
     const handleUploadFace = (img: any) => {
         const src = `${img.replace(
             "https://photo.gachmen.org/",
@@ -61,10 +65,11 @@ const Generator = () => {
         setLoading(true);
         try {
             const result = await handleGenerate(user, srcSwap);
-            // console.log(result.data.sukien_baby[0].link_da_swap);
+            console.log(result.data);
             const str = result.data.sukien_baby[0].link_da_swap;
             const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
-            setResult(result.data.sukien_baby[0].link_da_swap);
+            setResult(url);
+            setIdSaved(result.data.sukien_baby[0].id_toan_bo_su_kien);
             setLoading(false);
         } catch (err) {
             alert(err);
@@ -164,12 +169,16 @@ const Generator = () => {
                         <View className='w-full h-[220px] mt-4 overflow-hidden md:h-[440px] rounded'>
                             {
                                 result ? (
-                                    <TouchableOpacity className='w-full h-full' onPress={() => { setIsDetail(true) }}>
+                                    <TouchableOpacity className='w-full h-full' onPress={() => { 
+                                        router.navigate('/detail/generator')
+                                        router.setParams({ id_sukien: idSaved })
+                                        // setIsDetail(true)
+                                         }}>
                                         <Image source={{ uri: result }} className='w-full h-full object-contain' resizeMode='contain' />
                                     </TouchableOpacity>
                                 ) : (
                                     <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                                        <ProgressCircle loading={loading} />
+                                        <ProgressCircle loading={loading} width={width>=768? 768*0.9 : width*0.9} />
                                     </View>
                                 )
                             }
@@ -177,7 +186,7 @@ const Generator = () => {
                     </View>
                 </ScrollView>
                 <HisUpload isOpen={isOpen} handleClose={() => setIsOpen(false)} handleUploadFace={handleUploadFace} />
-                <DetailImg onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} />
+                {/* <DetailImg onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} /> */}
             </SafeAreaView>
         </ImageBackground>
     )

@@ -31,17 +31,17 @@ const signIn = () => {
             onChangeText={(text) => handleInput("email_or_username", text)}
             placeholder="Email or Username"
             placeholderTextColor={"#ccc"}
-            className="text-black text-xl border rounded-lg mt-4 w-4/5 py-4 px-4 items-center md:text-3xl md:max-w-[700px] bg-white"
+            className="text-black text-xl border rounded-lg mt-4 w-4/5 py-4 px-4 items-center md:text-3xl md:max-w-[768px] bg-white"
           />
           <TextInput
             onChangeText={(text) => handleInput("password", text)}
             placeholder="Password"
             secureTextEntry={true}
             placeholderTextColor={"#ccc"}
-            className="text-black text-xl border rounded-lg mt-4 w-4/5 py-4 px-4 items-center md:text-3xl md:max-w-[700px] bg-white"
+            className="text-black text-xl border rounded-lg mt-4 w-4/5 py-4 px-4 items-center md:text-3xl md:max-w-[768px] bg-white"
 
           />
-          <View className="mt-4 w-4/5 flex-row justify-between items-center md:max-w-[700px]">
+          <View className="mt-4 w-4/5 flex-row justify-between items-center md:max-w-[768px]">
             <View className="flex-row items-center h-6">
               <CheckBox onChange={() => setChecked(!isChecked)} checked={isChecked} />
               <Text className="ml-2 md:text-xl">Remember to log in</Text>
@@ -58,12 +58,12 @@ const signIn = () => {
 
           <TouchableOpacity
             onPress={() => handleSignIn(formData)}
-            className="w-4/5 p-4 bg-black rounded justify-center items-center my-3 md:max-w-[700px]"
+            className="w-4/5 p-4 bg-black rounded justify-center items-center my-3 md:max-w-[768px]"
           >
             <Text className="text-xl text-white md:text-3xl">Sign in</Text>
           </TouchableOpacity>
 
-          <View className="w-4/5 flex-row gap-1 items-center md:max-w-[700px]">
+          <View className="w-4/5 flex-row gap-1 items-center md:max-w-[768px]">
             <Text className="md:text-lg">Dont have account?</Text>
             <TouchableOpacity
               onPress={() => {

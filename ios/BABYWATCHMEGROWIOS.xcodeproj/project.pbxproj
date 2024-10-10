@@ -381,7 +381,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2.1.7;
+				CURRENT_PROJECT_VERSION = 2.2.4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7L7GWDCXQB;
 				ENABLE_BITCODE = NO;
@@ -390,13 +390,13 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = BABYWATCHMEGROWIOS/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "AI Video Generator Dream Face";
+				INFOPLIST_KEY_CFBundleDisplayName = " AI Video Generator - Novi AI";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.7;
+				MARKETING_VERSION = 2.2.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -425,17 +425,17 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2.1.7;
+				CURRENT_PROJECT_VERSION = 2.2.4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 7L7GWDCXQB;
 				INFOPLIST_FILE = BABYWATCHMEGROWIOS/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "AI Video Generator Dream Face";
+				INFOPLIST_KEY_CFBundleDisplayName = " AI Video Generator - Novi AI";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.7;
+				MARKETING_VERSION = 2.2.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

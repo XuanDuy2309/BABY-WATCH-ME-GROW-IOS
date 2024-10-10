@@ -1,6 +1,6 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground, Dimensions } from 'react-native'
 import React, { useContext, useState } from 'react'
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { GlobalContext } from '@/context/GlobalProvider'
 import images from '@/assets/images'
 import Add from '@/assets/icons/add'
@@ -18,6 +18,8 @@ import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import ProgressCircle from '@/components/ProgressCircle'
 
+const { width } = Dimensions.get('screen');
+
 const KidAndMom = () => {
   const { id } = useLocalSearchParams()
   const [loading, setLoading] = useState(false);
@@ -28,10 +30,12 @@ const KidAndMom = () => {
   const [img2, setImg2] = useState('');
   const [srcSwap, setSrcSwap] = useState({ img1: '', img2: '' });
   const [result, setResult] = useState([]);
-  const [srcDetail, setSrcDetail] = useState('');
+  const [idSaved, setIdSaved] = useState();
   const [positions, setPositions] = useState(0);
   const [wid, setWid] = useState(0);
   const { user } = useContext(GlobalContext);
+
+
 
   const handleNext = () => {
     if (positions < result.length - 1) {
@@ -84,9 +88,10 @@ const KidAndMom = () => {
     // }
     setLoading(true);
     try {
-      const result = await handleKidAndMom(user, srcSwap, id as string);
-      setResult(result.data.link_anh_swap);
-      // console.log(result.data);
+      const {data} = await handleKidAndMom(user, srcSwap, id as string);
+      setResult(data.link_anh_swap);
+      setIdSaved(data.sukien_2_image.id_saved);
+      console.log(data);
 
       setLoading(false);
     } catch (err) {
@@ -217,7 +222,11 @@ const KidAndMom = () => {
                           const str = item;
                           const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
                           return (
-                            <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { setIsDetail(true); setSrcDetail(item) }}>
+                            <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { 
+                              router.navigate('/detail/kid&mom');
+                              router.setParams({ id_sukien: idSaved });
+                              // setIsDetail(true);
+                             }}>
                               <Image source={{ uri: url }} className='w-full h-full object-contain' />
                             </TouchableOpacity>
                           )
@@ -236,7 +245,7 @@ const KidAndMom = () => {
                   </>
                 ) : (
                   <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                    <ProgressCircle loading={loading} />
+                    <ProgressCircle loading={loading} width={width>=768? 768*0.9 : width*0.9}/>
                   </View>
                 )
               }
@@ -244,7 +253,7 @@ const KidAndMom = () => {
           </View>
         </ScrollView>
         <HisUpload isOpen={isOpen} handleClose={() => setIsOpen(false)} handleUploadFace={handleUploadFace} />
-        <DetailProduct onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} />
+        {/* <DetailProduct onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} /> */}
       </SafeAreaView>
     </ImageBackground>
   )

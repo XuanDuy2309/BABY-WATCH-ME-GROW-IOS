@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, Alert, Dimensions, ImageBackground } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Alert, Dimensions, ImageBackground, Linking } from "react-native";
 import React, { useContext, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CardItem from "@/components/CardItem";
@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ResizeMode, Video } from "expo-av";
 import videos from "@/assets/videos";
 import * as ExpoTrackingTransparency from 'expo-tracking-transparency';
+import * as StoreReview from 'expo-store-review';
 
 const { width } = Dimensions.get('screen');
 
@@ -30,6 +31,14 @@ const index = () => {
       if (status === 'granted') {
         console.log('Yay! I have user permission to track data');
       }
+
+      // await StoreReview.requestReview();
+
+      if (await StoreReview.hasAction()) {
+        await StoreReview.requestReview();
+        // you can call StoreReview.requestReview()
+      }
+
     })();
   }, []);
   return (
@@ -74,29 +83,29 @@ const index = () => {
                     />
                   </TouchableOpacity>
                   {!user ? (
-                  <View className="py-2 md:py-6 flex-row justify-center gap-2 mt-3 md:mt-6">
-                    <TouchableOpacity
-                      // href={'/sign-in'}
-                      className="flex-1 bg-black py-2 rounded-lg"
-                      onPress={() => {
-                        router.navigate('/signIn');
-                      }}
-                    >
-                      <Text className="text-white text-center font-normal text-lg md:text-2xl">
-                        Sign In
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      className="flex-1 bg-black py-2 md:py-4 rounded-lg"
-                      onPress={() => {
-                        router.navigate("/signUp");
-                      }}
-                    >
-                      <Text className="text-white text-center font-normal text-lg md:text-2xl">
-                        Sign Up
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                    <View className="py-2 md:py-6 flex-row justify-center gap-2 mt-3 md:mt-6">
+                      <TouchableOpacity
+                        // href={'/sign-in'}
+                        className="flex-1 bg-black py-2 md:py-4 rounded-lg"
+                        onPress={() => {
+                          router.navigate('/signIn');
+                        }}
+                      >
+                        <Text className="text-white text-center font-normal text-lg md:text-2xl">
+                          Sign In
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        className="flex-1 bg-black py-2 md:py-4 rounded-lg"
+                        onPress={() => {
+                          router.navigate("/signUp");
+                        }}
+                      >
+                        <Text className="text-white text-center font-normal text-lg md:text-2xl">
+                          Sign Up
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   ) : (
                     <>
                       <TouchableOpacity

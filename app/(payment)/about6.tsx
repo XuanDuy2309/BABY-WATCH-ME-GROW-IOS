@@ -8,10 +8,10 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import CheckBox from '@/components/CheckBox';
 import { GlobalContext } from '@/context/GlobalProvider';
 
-const itemSkus = ['BABYWATCHMEGROWIOS.3usd', ''];
+const itemSkus = ['BABYWATCHMEGROWIOS.3usd10', ''];
 
 const about6 = () => {
-    const {handleSetCount} = useContext(GlobalContext);
+    const {user,handleSetCount,handleUpdateCoin} = useContext(GlobalContext);
     const [w, setW] = useState(0);
     const [h, setH] = useState(0);
     const [autoPay, setAutoPay] = useState(false);
@@ -45,9 +45,13 @@ const about6 = () => {
             Alert.alert('Something went wrong', err.message);
             return;
 
+        }).then((data:any) => {
+            if(data) {
+                console.log(data);
+                handleUpdateCoin(user, 10);
+            }
         });
 
-        handleSetCount(10);
         router.navigate('/(home)');
       } catch (err:any) {
         console.warn(err.code, err.message);
@@ -74,10 +78,10 @@ const about6 = () => {
                         <AntDesign name="checkcircle" size={24} color="#00ba00" />
                         <Text className='text-white text-lg font-semibold'>$3 for 10 time machine uses and 20 image swaps</Text>
                     </View>
-                    <View className='flex-row items-center mt-4 space-x-2'>
+                    {/* <View className='flex-row items-center mt-4 space-x-2'>
                         <AntDesign name="checkcircle" size={24} color="#00ba00" />
                         <Text className='text-white text-lg font-semibold'>Priority to use products of the ThinkAI ecosystem (creating wedding photos, reading comics, samnotes)</Text>
-                    </View>
+                    </View> */}
                     <View className='flex-row items-center mt-4 space-x-2'>
                         <AntDesign name="checkcircle" size={24} color="#00ba00" />
                         <Text className='text-white text-lg font-semibold'>Smart AI features help users develop long-term products</Text>

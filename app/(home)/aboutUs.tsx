@@ -19,7 +19,7 @@ const aboutUs = () => {
     >
       <ScrollView className='h-full w-full py-4'>
         <View
-          className='w-11/12 mx-auto md:max-w-[700px]'
+          className='w-11/12 mx-auto md:max-w-[768px]'
         >
           <Video
             source={videos.intro}

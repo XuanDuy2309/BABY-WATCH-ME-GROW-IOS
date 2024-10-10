@@ -69,6 +69,26 @@ export default function RootLayout() {
               />)
 
           }} />
+          <Stack.Screen name="detail/[title]" options={{
+            headerShown: true,
+            headerStyle: { backgroundColor: 'transparent' },
+            headerTitle: "Event Detail",
+            headerShadowVisible: false,
+
+            headerTitleStyle: {
+              fontSize: 30,
+              fontWeight: 'bold', // Use 'bold' instead of a numeric value like 600
+            },
+            headerTitleAlign: "center",
+            headerLeft: () => (
+              <AntDesign
+                name="left"
+                size={24}
+                color="black"
+                onPress={() => router.back()}
+              />)
+
+          }} />
           <Stack.Screen name="+not-found" options={{ headerShown: false }} />
         </Stack>
       </ImageBackground>

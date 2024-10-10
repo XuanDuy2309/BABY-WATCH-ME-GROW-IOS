@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground, Dimensions } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { GlobalContext } from '@/context/GlobalProvider';
 import Add from '@/assets/icons/add';
@@ -12,10 +12,13 @@ import { handleDadAndMom, handleNewBorn, handleTimeMachine } from '@/service/ima
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { withTiming, Easing, useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
 import { ResizeMode, Video } from 'expo-av';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import ProgressCircle from '@/components/ProgressCircle';
+
+
+const { width } = Dimensions.get('screen');
 
 const TimeMachine = () => {
   const { id } = useLocalSearchParams();
@@ -25,9 +28,8 @@ const TimeMachine = () => {
   const [img1, setImg1] = useState('');
   const [img2, setImg2] = useState('');
   const [srcSwap, setSrcSwap] = useState({ img1: '', img2: '' });
-  const [result, setResult] = useState<string>('');
-  const [wid, setWid] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [result, setResult] = useState('');
+  const [idSaved, setIdSaved] = useState();
   const { user } = useContext(GlobalContext);
 
 
@@ -66,11 +68,12 @@ const TimeMachine = () => {
     // }
     setLoading(true);
     try {
-      const res = await handleTimeMachine(user, srcSwap, id);
-      const str = res.data.sukien_video.link_vid_da_swap;
+      const {data} = await handleTimeMachine(user, srcSwap, id);
+      const str = data.sukien_video.link_vid_da_swap;
       const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
-      setResult((prev) => prev = url);
-      console.log(res.data.sukien_video.link_vid_da_swap);
+      setResult(url);
+      setIdSaved(data.sukien_video.id_saved);
+      console.log(data.sukien_video.id_saved);
 
       setLoading(false);
     } catch (err) {
@@ -135,11 +138,12 @@ const TimeMachine = () => {
           <View className='flex-row w-full justify-center mt-8'>
             {
               img1 ? (
-                <View className='w-[180px] h-[270px]  md:w-[220px] md:h-[276px]'>
+                <View className='w-[180px] h-[270px]  md:w-[220px] md:h-[276px] rounded overflow-hidden'>
                   <Image source={{ uri: img1 }} className='w-full h-full object-cover' />
                 </View>
               ) : (
-                <TouchableOpacity className='relative w-[180px] h-[270px]  md:w-[220px] md:h-[276px]' onPress={() => {
+                <TouchableOpacity className='relative w-[180px] h-[270px]  md:w-[220px] md:h-[276px] rounded overflow-hidden' 
+                onPress={() => {
                   setIsOpen(true);
                   setPic('img1');
                 }}>
@@ -154,13 +158,24 @@ const TimeMachine = () => {
           </View>
           <ButtonStart onPress={handleSwap} />
           <View className='mt-8 flex-col justify-start items-end'>
-            <TouchableOpacity onPress={handleDown}>
-              <DownLoad width={44} height={44} />
-            </TouchableOpacity>
-            <View className='w-full h-[220px] md:h-[440px] rounded mt-4 bg-[#C3B9B9] overflow-hidden relative' onLayout={(e) => {
-              const width = e.nativeEvent.layout.width;
-              setWid(width);
-            }} >
+            <View 
+              className='flex-row w-full justify-between items-center'
+            >
+              <TouchableOpacity
+                className='mr-3 bg-[#FF7991] py-2 px-3 rounded'
+                onPress={() => {
+                  router.navigate('/detail/timemachine');
+                  router.setParams({ id_sukien: idSaved });
+                }}
+              >
+                <Text className='text-white md:text-lg'>Click to see your video!</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleDown}>
+
+                <DownLoad width={44} height={44} />
+              </TouchableOpacity>
+            </View>
+            <View className='w-full h-[220px] md:h-[440px] rounded mt-4 bg-[#C3B9B9] overflow-hidden relative'  >
               {
                 result !== '' ?
                   (
@@ -178,7 +193,7 @@ const TimeMachine = () => {
                   )
                   : (
                     <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                      <ProgressCircle loading={loading}/>
+                      <ProgressCircle loading={loading} width={width>=768? 768*0.9 : (width*9.9)/12}/>
                     </View>
                   )
               }

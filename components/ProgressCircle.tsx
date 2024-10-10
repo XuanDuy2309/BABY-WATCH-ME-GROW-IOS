@@ -1,11 +1,15 @@
 import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import * as Progress from 'react-native-progress';
+import { rgbaArrayToRGBAColor } from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 
 
-const ProgressCircle = ({ loading }: {loading:boolean}) => {
+const ProgressCircle = ({ loading, width }: {loading:boolean,width:number}) => {
     const [progress, setProgress] = useState(0);
     useEffect(() => {
+        if (loading) {
+            setProgress(0);
+        }
         const interval = setInterval(() => {
             setProgress((oldProgress) => {
                 if (oldProgress === 1) {
@@ -22,11 +26,17 @@ const ProgressCircle = ({ loading }: {loading:boolean}) => {
     }, []);
     return (
         <>
-            {loading && <Progress.Circle 
-            size={50} 
-            progress={progress} 
-            formatText={() => `${Math.round(progress * 100)}%`}
-            showsText={true} />}
+            {loading && <Progress.Bar 
+            
+            progress={progress}
+            width={width} 
+            height={20} 
+            borderColor='#FF7991'
+            borderRadius={10}
+            borderWidth={1}
+            animationType='timing'
+            color='#FF7991'
+             /> }
 
         </>
     )

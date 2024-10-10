@@ -118,3 +118,43 @@ export const handleTimeMachine = (user: IUser, img: any,id: any) => apiSwap.get(
     Authorization: `Bearer ${user.token}`,
   },
 });
+
+export const getAllGen = (user: IUser,page: any) => api.get(`/get/list_all_generator/${user.id_user}?page=${page}`,{
+  headers: {
+    Authorization: `Bearer ${user.token}`,
+  },
+})
+
+export const getAllNew = (user: IUser,page: any) => api.get(`/get/list_all_newborn/${user.id_user}?page=${page}`,{
+  headers: {
+    Authorization: `Bearer ${user.token}`,
+  },
+})
+
+export const getAllTime = (user: IUser,page: any) => api.get(`/get/list_all_time_machine/${user.id_user}?page=${page}`,{
+  headers: {
+    Authorization: `Bearer ${user.token}`,
+  },
+})
+
+export const getAllDad = (user: IUser,page: any) => api.get(`/get/list_all_dadandmom/${user.id_user}?page=${page}`,{
+  headers: {
+    Authorization: `Bearer ${user.token}`,
+  },
+})
+
+export const getAllKid = (user: IUser,page: any) => api.get(`/get/list_all_kidandmom/${user.id_user}?page=${page}`,{
+  headers: {
+    Authorization: `Bearer ${user.token}`,
+  },
+})
+
+export const getDetailGen = (idSaved:any) => api.get(`/get/detail/generator/${idSaved}`)
+
+export const getDetailNew = (idSaved:any) => api.get(`/get/detail/newborn/${idSaved}`)
+
+export const getDetailTime = (idSaved:any) => api.get(`/get/detail/time_machine/${idSaved}`)
+
+export const getDetailDad = (idSaved:any) => api.get(`/get/detail/dadandmom/${idSaved}`)
+
+export const getDetailKid = (idSaved:any) => api.get(`/get/detail/dadandmom/${idSaved}`)

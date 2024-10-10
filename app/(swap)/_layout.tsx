@@ -2,13 +2,13 @@ import { View, Text, ImageBackground } from 'react-native'
 import React, { useEffect } from 'react'
 import { router, Stack } from 'expo-router'
 import AntDesign from '@expo/vector-icons/AntDesign'
-import  { AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import { AdEventType, BannerAd, BannerAdSize, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 import images from '@/assets/images';
 
 const adUnitId = __DEV__ ? TestIds.ADAPTIVE_BANNER : 'ca-app-pub-5372862349743986/1123321159';
 
 const _layout = () => {
-    
+
     return (
         <ImageBackground
             source={images.bgTalet}
@@ -43,7 +43,7 @@ const _layout = () => {
                         headerTitleStyle: { fontSize: 30, fontWeight: 'bold' },
                         headerShadowVisible: false,
                         headerTitle: "New Born",
-                        headerTitleAlign: "center",                        headerLeft: () => (
+                        headerTitleAlign: "center", headerLeft: () => (
                             <AntDesign
                                 name="left"
                                 size={24}
@@ -111,13 +111,13 @@ const _layout = () => {
                     }}
                 />
             </Stack>
-            {/* <BannerAd
+            <BannerAd
                 unitId={adUnitId}
                 size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                 requestOptions={{
                     requestNonPersonalizedAdsOnly: true,
                 }}
-            /> */}
+            />
 
         </ImageBackground>
     )

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, Image, Alert, ImageBackground, Dimensions } from 'react-native'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { GlobalContext } from '@/context/GlobalProvider';
 import Add from '@/assets/icons/add';
@@ -15,11 +15,14 @@ import * as FileSystem from 'expo-file-system';
 // import * as Sharing from 'expo-sharing';
 import * as MediaLibrary from 'expo-media-library';
 import ProgressCircle from '@/components/ProgressCircle';
+import { router } from 'expo-router';
+
+const { width } = Dimensions.get('screen');
 
 const NewBorn = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isDetail, setIsDetail] = useState(false);
+  const [idSukien, setIdSukien] = useState();
   const [pic, setPic] = useState('img1');
   const [img1, setImg1] = useState('');
   const [img2, setImg2] = useState('');
@@ -27,6 +30,7 @@ const NewBorn = () => {
   const [result, setResult] = useState([]);
   const [positions, setPositions] = useState(0);
   const [wid, setWid] = useState(0);
+  const [isDetail, setIsDetail] = useState(false);
   const { user } = useContext(GlobalContext);
 
 
@@ -82,8 +86,10 @@ const NewBorn = () => {
     }
     setLoading(true);
     try {
-      const result = await handleNewBorn(user, srcSwap);
-      setResult(result.data.link_anh_swap);
+      const {data} = await handleNewBorn(user, srcSwap);
+      setResult(data.link_anh_swap);
+      setIdSukien(data.sukien_2_image.id_saved);
+      console.log(data.sukien_2_image);
 
       setLoading(false);
     } catch (err) {
@@ -219,7 +225,12 @@ const NewBorn = () => {
                           const str = item;
                           const url = str.replace('/var/www/build_futurelove/', "https://photo.gachmen.org/");
                           return (
-                            <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { setIsDetail(true) }}>
+                            <TouchableOpacity key={index} className='relative w-full h-full' onPress={() => { 
+                              router.navigate('/detail/newborn')
+                              router.setParams({id_sukien: idSukien})
+                              // setIsDetail(true);
+
+                             }}>
                               <Image source={{ uri: url }} className='w-full h-full object-contain' />
                             </TouchableOpacity>
                           )
@@ -238,7 +249,7 @@ const NewBorn = () => {
                   </>
                 ) : (
                   <View className='w-full h-full justify-center items-center bg-[#C3B9B9]'>
-                    <ProgressCircle loading={loading} />
+                    <ProgressCircle loading={loading} width={width>=768? 768*0.9 : width*0.9}/>
                   </View>
                 )
               }
@@ -246,7 +257,7 @@ const NewBorn = () => {
           </View>
         </ScrollView>
         <HisUpload isOpen={isOpen} handleClose={() => setIsOpen(false)} handleUploadFace={handleUploadFace} />
-        <DetailProduct onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} />
+        {/* <DetailProduct onDetail={() => setIsDetail(false)} img={result} isDetail={isDetail} /> */}
       </SafeAreaView>
     </ImageBackground>
   )

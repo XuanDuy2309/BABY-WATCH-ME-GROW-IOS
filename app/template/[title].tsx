@@ -147,7 +147,7 @@ const Template = () => {
                     />
                     <Pagination totalPage={totalPages} onChangePage={(e) => handleChangePage(e)} />
 
-                    <Loader isLoading={loading} />
+                    {/* <Loader isLoading={loading} /> */}
                 </SafeAreaView>
             </ImageBackground>
         )
@@ -211,7 +211,7 @@ const Template = () => {
                 />
                 <Pagination totalPage={totalPages} onChangePage={(e) => handleChangePage(e)} />
 
-                <Loader isLoading={loading} />
+                {/* <Loader isLoading={loading} /> */}
             </SafeAreaView>
         </ImageBackground>
     );
